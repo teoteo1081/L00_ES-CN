@@ -468,6 +468,20 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
       return;
     }
 
+    /* 🔊 đọc 1 câu/đoạn — bản gốc CHƯA gắn lệnh bấm cho nút này (bấm không có gì xảy ra) */
+    var one = e.target.closest('.say-btn');
+    if (one){
+      var ol = one.getAttribute('data-lang');
+      if (Player.playing) Player.stop();
+      if (synth) synth.cancel();
+      if (isOff(ol)) { updateStatus('Tiếng này đang tắt đọc — bật lại trong 🎙 Giọng đọc'); return; }
+      var row = one.closest('.lrow, .rpara');
+      document.querySelectorAll('.now-row').forEach(function(el){ el.classList.remove('now-row'); });
+      if (row) row.classList.add('now-row');
+      updateStatus('');
+      speakOne(one.getAttribute('data-say'), ol, function(){ if (row) row.classList.remove('now-row'); });
+      return;
+    }
     var sayBtn = e.target.closest('.say-all-btn');
     if (sayBtn){
       if (Player.playing && Player.activeBtn === sayBtn){ Player.stop(); return; }
