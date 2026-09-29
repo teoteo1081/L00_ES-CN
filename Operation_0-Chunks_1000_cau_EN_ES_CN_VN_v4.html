@@ -225,8 +225,8 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
   var OFF = "__off__";
   /* ⏩ tốc độ đọc — dùng chung mọi tiếng, nhớ theo máy */
   var RATE = 0.92;
-  try { var r0 = parseFloat(localStorage.getItem('op0-rate')); if (r0 >= 0.5 && r0 <= 2) RATE = r0; } catch(e){}
-  var RATES = [0.6, 0.75, 0.85, 0.92, 1, 1.15, 1.3, 1.5];
+  try { var r0 = parseFloat(localStorage.getItem('op0-rate')); if (r0 >= 0.1 && r0 <= 2) RATE = r0; } catch(e){}
+  var RATES = [0.3, 0.4, 0.5, 0.6, 0.75, 0.85, 0.92, 1, 1.15, 1.3, 1.5];
   if (RATES.indexOf(RATE) < 0) RATES.push(RATE);
   function rateOptions(){ return RATES.slice().sort(function(a,b){return a-b;}).map(function(r){ return '<option value="' + r + '"' + (r === RATE ? ' selected' : '') + '>' + r + 'x</option>'; }).join(''); }
   function setRate(r){ RATE = r; try { localStorage.setItem('op0-rate', String(r)); } catch(e){} document.querySelectorAll('[data-rate]').forEach(function(s){ s.value = String(r); }); }
