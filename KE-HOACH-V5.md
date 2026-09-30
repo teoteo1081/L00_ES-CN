@@ -17,7 +17,8 @@
 - Sau khi làm: kiểm thử bằng Chrome chạy ngầm, cập nhật `index.html` trỏ sang V5, giữ GA4 `G-8W2S7SP8WN` + các event hiện có, thêm event `change_ui_lang`.
 
 ## ✅ Đã làm B2 (2026-09-29) — `Operation_0-Chunks_1000_cau_EN_ES_CN_VN_v5.html`
-- TJ chốt: **chỉ dịch nút + hướng dẫn** (tên Phần/bài, bối cảnh, checklist, nội dung câu giữ nguyên); **mở trang mặc định tiếng Anh**.
+- TJ chốt: **mở trang mặc định tiếng Anh**. Lần 1 chỉ dịch nút + hướng dẫn; xem thử thấy lệch nên TJ chọn **dịch luôn tên Phần/bài, bối cảnh + mức lịch sự, tiêu đề bài đọc, tiêu đề checklist** (nội dung câu, nghĩa VN, các mục checklist giữ nguyên).
+- Tên Phần/bài: phần tử có `data-tk` → bảng `TK` trong JS (vi/en/es/zh). GA4 vẫn gửi tên gốc tiếng Việt (`data-ga`) để số liệu không bị tách theo ngôn ngữ.
 - Ô chọn 🌐 VI / EN / ES / 中文 đầu thanh công cụ; nhớ theo máy (localStorage `op0-uilang`). HTML tĩnh đã là tiếng Anh nên không bị nháy chữ Việt khi tải.
 - Dịch: thanh công cụ, đoạn hướng dẫn đầu trang + đầu Phần 5, nút/tooltip Phần–nhiệm vụ–câu–bài đọc, ô "Từ vựng chủ chốt", bảng 🎙 giọng đọc, thanh phát nổi, dòng trạng thái, tooltip "chưa có nghĩa".
 - GA4 giữ `G-8W2S7SP8WN` + thêm event `change_ui_lang` (`ui_lang`). `index.html` trỏ sang V5.
