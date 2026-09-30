@@ -57,6 +57,7 @@ a{color:var(--accent2);text-decoration:none}
   background:var(--panel);color:var(--ink);cursor:pointer;
 }
 .topbar button.active{border-color:var(--accent2);color:var(--accent2)}
+.topbar .rate-lbl{font-size:13px;display:inline-flex;align-items:center;gap:4px}
 .topbar .hint{font-size:12px;color:var(--sub)}
 h2{font-size:22px;border-bottom:2px solid var(--gold);padding-bottom:6px;margin:0}
 h3{font-size:17px;color:var(--accent2);margin:0}
@@ -173,6 +174,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
       <button id="toggleSurvival">★ Survival sentences only</button>
       <button id="hideAllBtn">🙈 Hide all VN meanings</button>
       <button id="playAllBtn">▶ Read everything</button>
+      <label class="rate-lbl" title="Reading speed">⏩ <select id="topRate" data-rate title="Reading speed"></select></label>
       <button id="voiceBtn" title="Pick a voice for each language, or mute the ones you don't want to hear">🎙 Voices</button>
       <span class="hint" id="speakStatus"></span>
     </div>
@@ -659,6 +661,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
   });
 
   document.getElementById('mpRate').innerHTML = rateOptions();
+  document.getElementById('topRate').innerHTML = rateOptions();
   /* phím tắt: Space = tạm dừng / đọc tiếp khi đang đọc */
   document.addEventListener('keydown', function(e){
     if (e.code !== 'Space' || !Player.playing) return;
@@ -727,7 +730,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
     document.getElementById('introGuide').innerHTML = T('intro');
     set('#readingsGuide', 'readingsGuide');
     set('#voicePanel', 'vpAria', 'aria-label');
-    set('#mpRate', 'rateTitle', 'title'); set('#mpStop', 'stopTitle', 'title');
+    set('#mpRate', 'rateTitle', 'title'); set('#topRate', 'rateTitle', 'title'); set('.rate-lbl', 'rateTitle', 'title'); set('#mpStop', 'stopTitle', 'title');
     paintMini();
     each('.toc-play', function(b){ b.title = T('tocPlayTitle', {n: +b.getAttribute('data-target').slice(2) + 1}); });
     each('.say-all-btn', function(b){
