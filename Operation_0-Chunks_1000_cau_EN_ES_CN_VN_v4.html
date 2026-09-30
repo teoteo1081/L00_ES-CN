@@ -29,7 +29,7 @@
 body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",system-ui,-apple-system,sans-serif;}
 a{color:var(--accent2);text-decoration:none}
 .app{min-height:100vh}
-/* ☰ mục lục = ngăn kéo: ẩn mặc định, bấm ra ngoài / Esc để đóng, 📌 ghim cố định trên màn rộng */
+/* ☰ mục lục kiểu TJ WordLoop: 📌 ghim = cột cố định cạnh bài; 📍 bỏ ghim = cột thu lại, bấm ☰ trượt ra đè lên, bấm ra ngoài / Esc cất đi */
 .sidebar{
   position:fixed;left:0;top:0;bottom:0;width:300px;max-width:86vw;z-index:40;
   background:var(--panel);border-right:1px solid var(--line);padding:16px;overflow-y:auto;overscroll-behavior:contain;
@@ -43,13 +43,16 @@ body.toc-open #tocBackdrop{opacity:1;pointer-events:auto}
 @media (min-width: 861px){ #tocBackdrop{background:transparent} body.toc-open .sidebar{box-shadow:6px 0 18px rgba(0,0,0,.12)} }
 .side-tools{position:sticky;top:-16px;margin:-16px -16px 8px;padding:10px 12px 0;display:flex;justify-content:flex-end;gap:6px;background:var(--panel)}
 .side-tools button{border:1px solid var(--line);background:var(--chip);color:var(--ink);border-radius:8px;font-size:13px;padding:4px 9px;cursor:pointer}
-.side-tools button[aria-pressed="true"]{border-color:var(--accent2);color:var(--accent2);background:var(--panel)}
+.topbar .pin-btn{margin-left:-4px;padding:6px 8px;font-size:14px;line-height:1}
+.topbar .pin-btn.off{opacity:.45}
+.topbar .pin-btn.off .pin-ico{display:inline-block;transform:rotate(45deg)}
 @media (min-width: 861px){
   body.toc-pinned.toc-open .app{padding-left:300px}
   body.toc-pinned.toc-open #tocBackdrop{opacity:0;pointer-events:none}
   body.toc-pinned.toc-open .sidebar{box-shadow:none}
 }
 @media (max-width: 860px){ #tocPin{display:none} }
+@media (min-width: 861px){ body.toc-pinned.toc-open .side-tools{display:none} }
 .part, .mission, .reading, .checklist, #top{scroll-margin-top:84px}
 .now-row{background:var(--chip);border-radius:8px;box-shadow:0 0 0 4px var(--chip)}
 .sidebar h1{font-size:16px;margin:0 0 4px}
@@ -181,7 +184,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
 <div id="tocBackdrop"></div>
 <div class="app">
   <nav class="sidebar" id="sidebar" aria-label="Contents">
-    <div class="side-tools"><button id="tocPin" aria-pressed="false" title="Pin the contents open">📌</button><button id="tocClose" title="Close" aria-label="Close">✕</button></div>
+    <div class="side-tools"><button id="tocClose" title="Close" aria-label="Close">✕</button></div>
     <h1>🕵️ Operation 0 → Chunks</h1>
     <div class="tag" id="sideTag">1000 sentences · EN · ES · CN · VN</div>
     <ul class='toc-list'><li class="toc-part"><a href="#p-0" data-nav data-tk="part:0" data-ga="Phần 1 · Business – Kinh doanh">Part 1 · Business</a><button class="toc-play" data-scope="part" data-target="p-0" title="Read all of Part 1">▶</button><ul><li><a href="#m-0-0" data-nav data-tk="mis:A1" data-ga="A1 · Giới thiệu bản thân &amp; công ty (Networking)">A1 · Introducing yourself &amp; your company</a></li><li><a href="#m-0-1" data-nav data-tk="mis:A2" data-ga="A2 · Họp nội bộ (Internal meetings)">A2 · Internal meetings</a></li><li><a href="#m-0-2" data-nav data-tk="mis:A3" data-ga="A3 · Đàm phán (Negotiation)">A3 · Negotiation</a></li><li><a href="#m-0-3" data-nav data-tk="mis:A4" data-ga="A4 · Bán hàng &amp; chăm sóc khách hàng (Sales &amp; customer service)">A4 · Sales &amp; customer service</a></li><li><a href="#m-0-4" data-nav data-tk="mis:A5" data-ga="A5 · Tài chính &amp; báo cáo (Finance &amp; reports)">A5 · Finance &amp; reports</a></li><li><a href="#m-0-5" data-nav data-tk="mis:A6" data-ga="A6 · Quản lý dự án (Project management)">A6 · Project management</a></li><li><a href="#m-0-6" data-nav data-tk="mis:A7" data-ga="A7 · Tuyển dụng &amp; phỏng vấn (Hiring &amp; interviews)">A7 · Hiring &amp; interviews</a></li><li><a href="#m-0-7" data-nav data-tk="mis:A8" data-ga="A8 · Hợp đồng &amp; đối tác (Contracts &amp; partners)">A8 · Contracts &amp; partners</a></li><li><a href="#m-0-8" data-nav data-tk="mis:A9" data-ga="A9 · Công tác &amp; tiếp khách (Business travel &amp; hosting)">A9 · Business travel &amp; hosting</a></li><li><a href="#m-0-9" data-nav data-tk="mis:A10" data-ga="A10 · Khủng hoảng &amp; xử lý sự cố (Crisis &amp; problem solving)">A10 · Crisis &amp; problem solving</a></li></ul></li><li class="toc-part"><a href="#p-1" data-nav data-tk="part:1" data-ga="Phần 2 · Digital Marketing – Tiếp thị số">Part 2 · Digital Marketing</a><button class="toc-play" data-scope="part" data-target="p-1" title="Read all of Part 2">▶</button><ul><li><a href="#m-1-0" data-nav data-tk="mis:B1" data-ga="B1 · Chiến lược &amp; khách hàng mục tiêu (Strategy &amp; audience)">B1 · Strategy &amp; target audience</a></li><li><a href="#m-1-1" data-nav data-tk="mis:B2" data-ga="B2 · Mạng xã hội (Social media)">B2 · Social media</a></li><li><a href="#m-1-2" data-nav data-tk="mis:B3" data-ga="B3 · Sáng tạo nội dung (Content creation)">B3 · Content creation</a></li><li><a href="#m-1-3" data-nav data-tk="mis:B4" data-ga="B4 · SEO &amp; website (SEO &amp; website)">B4 · SEO &amp; website</a></li><li><a href="#m-1-4" data-nav data-tk="mis:B5" data-ga="B5 · Quảng cáo trả phí (Paid ads)">B5 · Paid ads</a></li><li><a href="#m-1-5" data-nav data-tk="mis:B6" data-ga="B6 · Email marketing (Email marketing)">B6 · Email marketing</a></li><li><a href="#m-1-6" data-nav data-tk="mis:B7" data-ga="B7 · Số liệu &amp; KPI (Analytics &amp; KPIs)">B7 · Analytics &amp; KPIs</a></li><li><a href="#m-1-7" data-nav data-tk="mis:B8" data-ga="B8 · Thương hiệu (Branding)">B8 · Branding</a></li><li><a href="#m-1-8" data-nav data-tk="mis:B9" data-ga="B9 · Influencer &amp; hợp tác (Influencers &amp; partnerships)">B9 · Influencers &amp; partnerships</a></li><li><a href="#m-1-9" data-nav data-tk="mis:B10" data-ga="B10 · Báo cáo cho khách hàng (Client reporting)">B10 · Client reporting</a></li></ul></li><li class="toc-part"><a href="#p-2" data-nav data-tk="part:2" data-ga="Phần 3 · US Tax – Thuế Mỹ">Part 3 · US Tax</a><button class="toc-play" data-scope="part" data-target="p-2" title="Read all of Part 3">▶</button><ul><li><a href="#m-2-0" data-nav data-tk="mis:C1" data-ga="C1 · Thuế cơ bản &amp; tình trạng khai thuế (Tax basics &amp; filing status)">C1 · Tax basics &amp; filing status</a></li><li><a href="#m-2-1" data-nav data-tk="mis:C2" data-ga="C2 · Giấy tờ thu nhập: W-2, 1099 (Income forms: W-2 &amp; 1099)">C2 · Income forms: W-2 &amp; 1099</a></li><li><a href="#m-2-2" data-nav data-tk="mis:C3" data-ga="C3 · Khấu trừ &amp; tín dụng thuế (Deductions &amp; credits)">C3 · Deductions &amp; tax credits</a></li><li><a href="#m-2-3" data-nav data-tk="mis:C4" data-ga="C4 · Làm việc với chuyên viên thuế (Working with a tax professional)">C4 · Working with a tax professional</a></li><li><a href="#m-2-4" data-nav data-tk="mis:C5" data-ga="C5 · Hạn chót &amp; gia hạn (Deadlines &amp; extensions)">C5 · Deadlines &amp; extensions</a></li><li><a href="#m-2-5" data-nav data-tk="mis:C6" data-ga="C6 · Tự kinh doanh / freelancer (Self-employed)">C6 · Self-employed / freelancer</a></li><li><a href="#m-2-6" data-nav data-tk="mis:C7" data-ga="C7 · Thuế doanh nghiệp nhỏ (Small business taxes)">C7 · Small business taxes</a></li><li><a href="#m-2-7" data-nav data-tk="mis:C8" data-ga="C8 · Liên lạc IRS &amp; thư thông báo (The IRS &amp; notices)">C8 · Contacting the IRS &amp; notices</a></li><li><a href="#m-2-8" data-nav data-tk="mis:C9" data-ga="C9 · Hoàn thuế, nợ thuế &amp; thanh toán (Refunds &amp; payments)">C9 · Refunds, tax debt &amp; payments</a></li><li><a href="#m-2-9" data-nav data-tk="mis:C10" data-ga="C10 · Kiểm toán thuế &amp; lưu hồ sơ (Audits &amp; records)">C10 · Tax audits &amp; record keeping</a></li></ul></li><li class="toc-part"><a href="#p-3" data-nav data-tk="part:3" data-ga="Phần 4 · Communication – Giao tiếp">Part 4 · Communication</a><button class="toc-play" data-scope="part" data-target="p-3" title="Read all of Part 4">▶</button><ul><li><a href="#m-3-0" data-nav data-tk="mis:D1" data-ga="D1 · Gọi điện thoại (Phone calls)">D1 · Phone calls</a></li><li><a href="#m-3-1" data-nav data-tk="mis:D2" data-ga="D2 · Viết email (Writing emails)">D2 · Writing emails</a></li><li><a href="#m-3-2" data-nav data-tk="mis:D3" data-ga="D3 · Hỏi lại &amp; làm rõ (Clarifying)">D3 · Asking again &amp; clarifying</a></li><li><a href="#m-3-3" data-nav data-tk="mis:D4" data-ga="D4 · Đồng ý &amp; phản đối lịch sự (Agreeing &amp; disagreeing)">D4 · Agreeing &amp; disagreeing politely</a></li><li><a href="#m-3-4" data-nav data-tk="mis:D5" data-ga="D5 · Xin lỗi &amp; xử lý phàn nàn (Apologies &amp; complaints)">D5 · Apologies &amp; handling complaints</a></li><li><a href="#m-3-5" data-nav data-tk="mis:D6" data-ga="D6 · Small talk công sở (Small talk)">D6 · Office small talk</a></li><li><a href="#m-3-6" data-nav data-tk="mis:D7" data-ga="D7 · Góp ý &amp; nhận xét (Giving &amp; receiving feedback)">D7 · Giving &amp; receiving feedback</a></li><li><a href="#m-3-7" data-nav data-tk="mis:D8" data-ga="D8 · Thuyết trình (Presentations)">D8 · Presentations</a></li><li><a href="#m-3-8" data-nav data-tk="mis:D9" data-ga="D9 · Họp online (Video calls)">D9 · Online meetings</a></li><li><a href="#m-3-9" data-nav data-tk="mis:D10" data-ga="D10 · Tình huống khẩn cấp (Emergencies &amp; survival)">D10 · Emergencies &amp; survival</a></li></ul></li><li class="toc-part"><a href="#readings" data-nav data-tk="part:4" data-ga="Phần 5 · 4 bài đọc">Part 5 · 4 readings</a><ul><li><a href="#r-0" data-nav data-tk="rtoc:1" data-ga="Bài 1 · English">Text 1 · English</a></li><li><a href="#r-1" data-nav data-tk="rtoc:2" data-ga="Bài 2 · Español">Text 2 · Español</a></li><li><a href="#r-2" data-nav data-tk="rtoc:3" data-ga="Bài 3 · 中文">Text 3 · 中文</a></li><li><a href="#r-3" data-nav data-tk="rtoc:4" data-ga="Bài 4 · Tiếng Việt">Text 4 · Tiếng Việt</a></li></ul></li></ul>
@@ -189,7 +192,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
   <main class="main">
     <div class="topbar">
       <select id="uiLang" title="Interface language" aria-label="Interface language"><option value="vi">🌐 VI</option><option value="en" selected>🌐 EN</option><option value="es">🌐 ES</option><option value="zh">🌐 中文</option></select>
-      <button class="menu-btn" id="menuBtn">☰ Contents</button>
+      <button class="menu-btn" id="menuBtn">☰ Contents</button><button class="pin-btn" id="tocPin" aria-pressed="true" title="Unpin the contents">📌</button>
       <button id="themeBtn">🌗 Light/Dark</button>
       <button id="toggleSurvival">★ Survival sentences only</button>
       <button id="hideAllBtn">🙈 Hide all VN meanings</button>
@@ -724,19 +727,32 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
     }
   });
 
-  /* ☰ mục lục: mở/đóng; 📌 ghim (chỉ màn ≥1100px) thì mở sẵn và không che nội dung */
+  /* ☰ mục lục kiểu TJ WordLoop: 📌 ghim (mặc định, màn ≥861px) = cột cố định; bỏ ghim = thu lại, ☰ để trượt ra */
   var BODY = document.body, wide = matchMedia('(min-width: 861px)');
   function pinnedNow(){ return BODY.classList.contains('toc-pinned') && wide.matches; }
   function setToc(open){ BODY.classList.toggle('toc-open', open); }
-  function paintPin(){ var b = document.getElementById('tocPin'); var on = BODY.classList.contains('toc-pinned'); b.setAttribute('aria-pressed', String(on)); b.title = T(on ? 'tocUnpin' : 'tocPin'); document.getElementById('tocClose').title = T('tocClose'); }
-  try { if (localStorage.getItem('op0-toc-pin') === '1') { BODY.classList.add('toc-pinned'); if (wide.matches) setToc(true); } } catch(e){}
+  function paintPin(){
+    var b = document.getElementById('tocPin'), on = BODY.classList.contains('toc-pinned');
+    b.classList.toggle('off', !on); b.setAttribute('aria-pressed', String(on));
+    b.innerHTML = '<span class="pin-ico">' + (on ? '📌' : '📍') + '</span>';
+    b.title = T(on ? 'tocUnpin' : 'tocPin'); b.setAttribute('aria-label', b.title);
+    document.getElementById('tocClose').title = T('tocClose');
+  }
+  var pin0 = null; try { pin0 = localStorage.getItem('op0-toc-pin'); } catch(e){}
+  if (pin0 !== '0') BODY.classList.add('toc-pinned');   /* mặc định GHIM như bố cục cũ */
+  setToc(pinnedNow());
+  /* đổi cỡ cửa sổ: hẹp lại thì thành ngăn kéo (đóng), rộng ra mà đang ghim thì hiện lại cột */
+  if (wide.addEventListener) wide.addEventListener('change', function(){ setToc(pinnedNow()); });
   paintPin();
-  document.getElementById('menuBtn').addEventListener('click', function(){ setToc(!BODY.classList.contains('toc-open')); });
+  document.getElementById('menuBtn').addEventListener('click', function(){
+    if (pinnedNow()) return;   /* đang ghim: cột đã hiện sẵn (như WordLoop) */
+    setToc(!BODY.classList.contains('toc-open'));
+  });
   document.getElementById('tocClose').addEventListener('click', function(){ setToc(false); });
   document.getElementById('tocBackdrop').addEventListener('click', function(){ setToc(false); });
   document.getElementById('tocPin').addEventListener('click', function(){
     var on = !BODY.classList.contains('toc-pinned');
-    BODY.classList.toggle('toc-pinned', on); setToc(true); paintPin();
+    BODY.classList.toggle('toc-pinned', on); setToc(on); paintPin();   /* ghim = mở cố định; bỏ ghim = cất mục lục */
     try { localStorage.setItem('op0-toc-pin', on ? '1' : '0'); } catch(e){}
   });
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && BODY.classList.contains('toc-open') && !pinnedNow()) setToc(false); });
