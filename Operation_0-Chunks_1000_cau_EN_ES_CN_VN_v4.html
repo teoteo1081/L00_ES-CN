@@ -28,11 +28,28 @@
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",system-ui,-apple-system,sans-serif;}
 a{color:var(--accent2);text-decoration:none}
-.app{display:flex;min-height:100vh}
+.app{min-height:100vh}
+/* ☰ mục lục = ngăn kéo: ẩn mặc định, bấm ra ngoài / Esc để đóng, 📌 ghim cố định trên màn rộng */
 .sidebar{
-  width:300px;flex:none;background:var(--panel);border-right:1px solid var(--line);
-  padding:16px;position:sticky;top:0;height:100vh;overflow-y:auto;
+  position:fixed;left:0;top:0;bottom:0;width:300px;max-width:86vw;z-index:40;
+  background:var(--panel);border-right:1px solid var(--line);padding:16px;overflow-y:auto;overscroll-behavior:contain;
+  transform:translateX(-100%);visibility:hidden;transition:transform .22s ease, visibility 0s linear .22s;
+  box-shadow:4px 0 24px rgba(0,0,0,.2);
 }
+body.toc-open .sidebar{transform:none;visibility:visible;transition:transform .22s ease}
+#tocBackdrop{position:fixed;inset:0;z-index:39;background:rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity .2s}
+body.toc-open #tocBackdrop{opacity:1;pointer-events:auto}
+.side-tools{position:sticky;top:-16px;margin:-16px -16px 8px;padding:10px 12px 0;display:flex;justify-content:flex-end;gap:6px;background:var(--panel)}
+.side-tools button{border:1px solid var(--line);background:var(--chip);color:var(--ink);border-radius:8px;font-size:13px;padding:4px 9px;cursor:pointer}
+.side-tools button[aria-pressed="true"]{border-color:var(--accent2);color:var(--accent2);background:var(--panel)}
+@media (min-width: 1100px){
+  body.toc-pinned.toc-open .app{padding-left:300px}
+  body.toc-pinned.toc-open #tocBackdrop{opacity:0;pointer-events:none}
+  body.toc-pinned.toc-open .sidebar{box-shadow:none}
+}
+@media (max-width: 1099px){ #tocPin{display:none} }
+.part, .mission, .reading, .checklist, #top{scroll-margin-top:84px}
+.now-row{background:var(--chip);border-radius:8px;box-shadow:0 0 0 4px var(--chip)}
 .sidebar h1{font-size:16px;margin:0 0 4px}
 .sidebar .tag{font-size:12px;color:var(--sub);margin-bottom:12px}
 .toc-list, .toc-list ul{list-style:none;margin:0;padding:0}
@@ -47,7 +64,7 @@ a{color:var(--accent2);text-decoration:none}
   font-size:11px;padding:3px 7px;cursor:pointer;flex:none;
 }
 .toc-play:hover{border-color:var(--accent2)}
-.main{flex:1;padding:24px 28px 80px;max-width:900px}
+.main{padding:24px 28px 96px;max-width:880px;margin:0 auto}
 .topbar{
   position:sticky;top:0;background:var(--bg);z-index:5;padding:10px 0 14px;
   border-bottom:1px solid var(--line);margin-bottom:18px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;
@@ -116,21 +133,13 @@ blockquote.summary{border-left:4px solid var(--accent2);margin:14px 0 0;padding:
 .checklist ul{padding-left:20px}
 .checklist li{margin-bottom:6px}
 .hide-normal .card:not(.survival){display:none}
-.menu-btn{display:none}
 #tooltip{
   position:fixed;z-index:50;max-width:260px;background:var(--ink);color:var(--bg);
   padding:8px 12px;border-radius:8px;font-size:13px;box-shadow:0 6px 20px rgba(0,0,0,.25);
   display:none;pointer-events:none;
 }
 @media (max-width: 860px){
-  .app{display:block}
-  .sidebar{
-    position:fixed;left:0;top:0;bottom:0;transform:translateX(-100%);transition:transform .2s;
-    z-index:20;box-shadow:4px 0 24px rgba(0,0,0,.2);
-  }
-  .sidebar.open{transform:translateX(0)}
-  .menu-btn{display:inline-block}
-  .main{max-width:100%;padding:16px}
+  .main{max-width:100%;padding:16px 16px 96px}
 }
 footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
 
@@ -165,8 +174,10 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
 </head>
 <body>
 <div id="tooltip"></div>
+<div id="tocBackdrop"></div>
 <div class="app">
-  <nav class="sidebar" id="sidebar">
+  <nav class="sidebar" id="sidebar" aria-label="Contents">
+    <div class="side-tools"><button id="tocPin" aria-pressed="false" title="Pin the contents open">📌</button><button id="tocClose" title="Close" aria-label="Close">✕</button></div>
     <h1>🕵️ Operation 0 → Chunks</h1>
     <div class="tag" id="sideTag">1000 sentences · EN · ES · CN · VN</div>
     <ul class='toc-list'><li class="toc-part"><a href="#p-0" data-nav data-tk="part:0" data-ga="Phần 1 · Business – Kinh doanh">Part 1 · Business</a><button class="toc-play" data-scope="part" data-target="p-0" title="Read all of Part 1">▶</button><ul><li><a href="#m-0-0" data-nav data-tk="mis:A1" data-ga="A1 · Giới thiệu bản thân &amp; công ty (Networking)">A1 · Introducing yourself &amp; your company</a></li><li><a href="#m-0-1" data-nav data-tk="mis:A2" data-ga="A2 · Họp nội bộ (Internal meetings)">A2 · Internal meetings</a></li><li><a href="#m-0-2" data-nav data-tk="mis:A3" data-ga="A3 · Đàm phán (Negotiation)">A3 · Negotiation</a></li><li><a href="#m-0-3" data-nav data-tk="mis:A4" data-ga="A4 · Bán hàng &amp; chăm sóc khách hàng (Sales &amp; customer service)">A4 · Sales &amp; customer service</a></li><li><a href="#m-0-4" data-nav data-tk="mis:A5" data-ga="A5 · Tài chính &amp; báo cáo (Finance &amp; reports)">A5 · Finance &amp; reports</a></li><li><a href="#m-0-5" data-nav data-tk="mis:A6" data-ga="A6 · Quản lý dự án (Project management)">A6 · Project management</a></li><li><a href="#m-0-6" data-nav data-tk="mis:A7" data-ga="A7 · Tuyển dụng &amp; phỏng vấn (Hiring &amp; interviews)">A7 · Hiring &amp; interviews</a></li><li><a href="#m-0-7" data-nav data-tk="mis:A8" data-ga="A8 · Hợp đồng &amp; đối tác (Contracts &amp; partners)">A8 · Contracts &amp; partners</a></li><li><a href="#m-0-8" data-nav data-tk="mis:A9" data-ga="A9 · Công tác &amp; tiếp khách (Business travel &amp; hosting)">A9 · Business travel &amp; hosting</a></li><li><a href="#m-0-9" data-nav data-tk="mis:A10" data-ga="A10 · Khủng hoảng &amp; xử lý sự cố (Crisis &amp; problem solving)">A10 · Crisis &amp; problem solving</a></li></ul></li><li class="toc-part"><a href="#p-1" data-nav data-tk="part:1" data-ga="Phần 2 · Digital Marketing – Tiếp thị số">Part 2 · Digital Marketing</a><button class="toc-play" data-scope="part" data-target="p-1" title="Read all of Part 2">▶</button><ul><li><a href="#m-1-0" data-nav data-tk="mis:B1" data-ga="B1 · Chiến lược &amp; khách hàng mục tiêu (Strategy &amp; audience)">B1 · Strategy &amp; target audience</a></li><li><a href="#m-1-1" data-nav data-tk="mis:B2" data-ga="B2 · Mạng xã hội (Social media)">B2 · Social media</a></li><li><a href="#m-1-2" data-nav data-tk="mis:B3" data-ga="B3 · Sáng tạo nội dung (Content creation)">B3 · Content creation</a></li><li><a href="#m-1-3" data-nav data-tk="mis:B4" data-ga="B4 · SEO &amp; website (SEO &amp; website)">B4 · SEO &amp; website</a></li><li><a href="#m-1-4" data-nav data-tk="mis:B5" data-ga="B5 · Quảng cáo trả phí (Paid ads)">B5 · Paid ads</a></li><li><a href="#m-1-5" data-nav data-tk="mis:B6" data-ga="B6 · Email marketing (Email marketing)">B6 · Email marketing</a></li><li><a href="#m-1-6" data-nav data-tk="mis:B7" data-ga="B7 · Số liệu &amp; KPI (Analytics &amp; KPIs)">B7 · Analytics &amp; KPIs</a></li><li><a href="#m-1-7" data-nav data-tk="mis:B8" data-ga="B8 · Thương hiệu (Branding)">B8 · Branding</a></li><li><a href="#m-1-8" data-nav data-tk="mis:B9" data-ga="B9 · Influencer &amp; hợp tác (Influencers &amp; partnerships)">B9 · Influencers &amp; partnerships</a></li><li><a href="#m-1-9" data-nav data-tk="mis:B10" data-ga="B10 · Báo cáo cho khách hàng (Client reporting)">B10 · Client reporting</a></li></ul></li><li class="toc-part"><a href="#p-2" data-nav data-tk="part:2" data-ga="Phần 3 · US Tax – Thuế Mỹ">Part 3 · US Tax</a><button class="toc-play" data-scope="part" data-target="p-2" title="Read all of Part 3">▶</button><ul><li><a href="#m-2-0" data-nav data-tk="mis:C1" data-ga="C1 · Thuế cơ bản &amp; tình trạng khai thuế (Tax basics &amp; filing status)">C1 · Tax basics &amp; filing status</a></li><li><a href="#m-2-1" data-nav data-tk="mis:C2" data-ga="C2 · Giấy tờ thu nhập: W-2, 1099 (Income forms: W-2 &amp; 1099)">C2 · Income forms: W-2 &amp; 1099</a></li><li><a href="#m-2-2" data-nav data-tk="mis:C3" data-ga="C3 · Khấu trừ &amp; tín dụng thuế (Deductions &amp; credits)">C3 · Deductions &amp; tax credits</a></li><li><a href="#m-2-3" data-nav data-tk="mis:C4" data-ga="C4 · Làm việc với chuyên viên thuế (Working with a tax professional)">C4 · Working with a tax professional</a></li><li><a href="#m-2-4" data-nav data-tk="mis:C5" data-ga="C5 · Hạn chót &amp; gia hạn (Deadlines &amp; extensions)">C5 · Deadlines &amp; extensions</a></li><li><a href="#m-2-5" data-nav data-tk="mis:C6" data-ga="C6 · Tự kinh doanh / freelancer (Self-employed)">C6 · Self-employed / freelancer</a></li><li><a href="#m-2-6" data-nav data-tk="mis:C7" data-ga="C7 · Thuế doanh nghiệp nhỏ (Small business taxes)">C7 · Small business taxes</a></li><li><a href="#m-2-7" data-nav data-tk="mis:C8" data-ga="C8 · Liên lạc IRS &amp; thư thông báo (The IRS &amp; notices)">C8 · Contacting the IRS &amp; notices</a></li><li><a href="#m-2-8" data-nav data-tk="mis:C9" data-ga="C9 · Hoàn thuế, nợ thuế &amp; thanh toán (Refunds &amp; payments)">C9 · Refunds, tax debt &amp; payments</a></li><li><a href="#m-2-9" data-nav data-tk="mis:C10" data-ga="C10 · Kiểm toán thuế &amp; lưu hồ sơ (Audits &amp; records)">C10 · Tax audits &amp; record keeping</a></li></ul></li><li class="toc-part"><a href="#p-3" data-nav data-tk="part:3" data-ga="Phần 4 · Communication – Giao tiếp">Part 4 · Communication</a><button class="toc-play" data-scope="part" data-target="p-3" title="Read all of Part 4">▶</button><ul><li><a href="#m-3-0" data-nav data-tk="mis:D1" data-ga="D1 · Gọi điện thoại (Phone calls)">D1 · Phone calls</a></li><li><a href="#m-3-1" data-nav data-tk="mis:D2" data-ga="D2 · Viết email (Writing emails)">D2 · Writing emails</a></li><li><a href="#m-3-2" data-nav data-tk="mis:D3" data-ga="D3 · Hỏi lại &amp; làm rõ (Clarifying)">D3 · Asking again &amp; clarifying</a></li><li><a href="#m-3-3" data-nav data-tk="mis:D4" data-ga="D4 · Đồng ý &amp; phản đối lịch sự (Agreeing &amp; disagreeing)">D4 · Agreeing &amp; disagreeing politely</a></li><li><a href="#m-3-4" data-nav data-tk="mis:D5" data-ga="D5 · Xin lỗi &amp; xử lý phàn nàn (Apologies &amp; complaints)">D5 · Apologies &amp; handling complaints</a></li><li><a href="#m-3-5" data-nav data-tk="mis:D6" data-ga="D6 · Small talk công sở (Small talk)">D6 · Office small talk</a></li><li><a href="#m-3-6" data-nav data-tk="mis:D7" data-ga="D7 · Góp ý &amp; nhận xét (Giving &amp; receiving feedback)">D7 · Giving &amp; receiving feedback</a></li><li><a href="#m-3-7" data-nav data-tk="mis:D8" data-ga="D8 · Thuyết trình (Presentations)">D8 · Presentations</a></li><li><a href="#m-3-8" data-nav data-tk="mis:D9" data-ga="D9 · Họp online (Video calls)">D9 · Online meetings</a></li><li><a href="#m-3-9" data-nav data-tk="mis:D10" data-ga="D10 · Tình huống khẩn cấp (Emergencies &amp; survival)">D10 · Emergencies &amp; survival</a></li></ul></li><li class="toc-part"><a href="#readings" data-nav data-tk="part:4" data-ga="Phần 5 · 4 bài đọc">Part 5 · 4 readings</a><ul><li><a href="#r-0" data-nav data-tk="rtoc:1" data-ga="Bài 1 · English">Text 1 · English</a></li><li><a href="#r-1" data-nav data-tk="rtoc:2" data-ga="Bài 2 · Español">Text 2 · Español</a></li><li><a href="#r-2" data-nav data-tk="rtoc:3" data-ga="Bài 3 · 中文">Text 3 · 中文</a></li><li><a href="#r-3" data-nav data-tk="rtoc:4" data-ga="Bài 4 · Tiếng Việt">Text 4 · Tiếng Việt</a></li></ul></li></ul>
@@ -234,7 +245,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
       vpEmpty: 'No voice on this device — this language will be skipped.', vpAuto: 'Auto ({v})', vpOff: '🔇 Don\'t read this language',
       vpTest: '▶ Test', vpRate: '⏩ Speed', vpDone: 'Done',
       testOff: 'This language is muted — pick a voice, then test', sayOff: 'This language is muted — turn it back on in 🎙 Voices',
-      noMean: 'No separate meaning for this word — see the full sentence meaning below.', noMeanSel: 'No meaning for this selection.', vpRec: '🎧 {v} (recorded · {n})', vpNote2: 'Tick the languages you want to hear, pick a voice (▶ Test to listen), then press Apply.', vpApply: '✓ Apply', vpCancel: 'Cancel', vpApplied: '✓ Voice settings applied', vpOnTitle: 'Read this language', ltTitle: 'Turn reading of this language on/off', noRec: 'No recorded voice for this sentence yet'
+      noMean: 'No separate meaning for this word — see the full sentence meaning below.', noMeanSel: 'No meaning for this selection.', vpRec: '🎧 {v} (recorded · {n})', tocPin: 'Pin the contents open', tocUnpin: 'Unpin the contents', tocClose: 'Close', vpNote2: 'Tick the languages you want to hear, pick a voice (▶ Test to listen), then press Apply.', vpApply: '✓ Apply', vpCancel: 'Cancel', vpApplied: '✓ Voice settings applied', vpOnTitle: 'Read this language', ltTitle: 'Turn reading of this language on/off', noRec: 'No recorded voice for this sentence yet'
     },
     vi: {
       title: 'Operation 0 → Chunks · 1000 câu sống còn', tag: '1000 câu · EN · ES · CN · VN', uiLang: 'Ngôn ngữ giao diện',
@@ -257,7 +268,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
       vpEmpty: 'Máy này chưa có giọng — sẽ tự bỏ qua tiếng này.', vpAuto: 'Tự chọn ({v})', vpOff: '🔇 Không đọc tiếng này',
       vpTest: '▶ Nghe thử', vpRate: '⏩ Tốc độ', vpDone: 'Xong',
       testOff: 'Tiếng này đang tắt — chọn 1 giọng rồi nghe thử', sayOff: 'Tiếng này đang tắt đọc — bật lại trong 🎙 Giọng đọc',
-      noMean: 'Chưa có nghĩa riêng cho từ này — xem nghĩa cả câu bên dưới.', noMeanSel: 'Chưa có nghĩa cho đoạn này.', vpRec: '🎧 {v} (thu sẵn · {n} câu)', vpNote2: 'Tích chọn tiếng muốn nghe, chọn giọng (▶ Nghe thử để nghe), rồi bấm Áp dụng.', vpApply: '✓ Áp dụng', vpCancel: 'Huỷ', vpApplied: '✓ Đã áp dụng giọng đọc', vpOnTitle: 'Đọc tiếng này', ltTitle: 'Bật/tắt đọc tiếng này', noRec: 'Câu này chưa có giọng thu sẵn'
+      noMean: 'Chưa có nghĩa riêng cho từ này — xem nghĩa cả câu bên dưới.', noMeanSel: 'Chưa có nghĩa cho đoạn này.', vpRec: '🎧 {v} (thu sẵn · {n} câu)', tocPin: 'Ghim mục lục luôn mở', tocUnpin: 'Bỏ ghim mục lục', tocClose: 'Đóng', vpNote2: 'Tích chọn tiếng muốn nghe, chọn giọng (▶ Nghe thử để nghe), rồi bấm Áp dụng.', vpApply: '✓ Áp dụng', vpCancel: 'Huỷ', vpApplied: '✓ Đã áp dụng giọng đọc', vpOnTitle: 'Đọc tiếng này', ltTitle: 'Bật/tắt đọc tiếng này', noRec: 'Câu này chưa có giọng thu sẵn'
     },
     es: {
       title: 'Operation 0 → Chunks · 1000 frases de supervivencia', tag: '1000 frases · EN · ES · CN · VN', uiLang: 'Idioma de la interfaz',
@@ -280,7 +291,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
       vpEmpty: 'No hay voz en este dispositivo: se omitirá este idioma.', vpAuto: 'Automático ({v})', vpOff: '🔇 No leer este idioma',
       vpTest: '▶ Probar', vpRate: '⏩ Velocidad', vpDone: 'Listo',
       testOff: 'Este idioma está silenciado: elige una voz y prueba', sayOff: 'Este idioma está silenciado: actívalo en 🎙 Voces',
-      noMean: 'Esta palabra no tiene significado propio: mira el significado de la frase abajo.', noMeanSel: 'No hay significado para esta selección.', vpRec: '🎧 {v} (grabada · {n})', vpNote2: 'Marca los idiomas que quieres oír, elige una voz (▶ Probar para escuchar) y pulsa Aplicar.', vpApply: '✓ Aplicar', vpCancel: 'Cancelar', vpApplied: '✓ Voces aplicadas', vpOnTitle: 'Leer este idioma', ltTitle: 'Activar/desactivar la lectura de este idioma', noRec: 'Esta frase aún no tiene voz grabada'
+      noMean: 'Esta palabra no tiene significado propio: mira el significado de la frase abajo.', noMeanSel: 'No hay significado para esta selección.', vpRec: '🎧 {v} (grabada · {n})', tocPin: 'Fijar el índice abierto', tocUnpin: 'Soltar el índice', tocClose: 'Cerrar', vpNote2: 'Marca los idiomas que quieres oír, elige una voz (▶ Probar para escuchar) y pulsa Aplicar.', vpApply: '✓ Aplicar', vpCancel: 'Cancelar', vpApplied: '✓ Voces aplicadas', vpOnTitle: 'Leer este idioma', ltTitle: 'Activar/desactivar la lectura de este idioma', noRec: 'Esta frase aún no tiene voz grabada'
     },
     zh: {
       title: 'Operation 0 → Chunks · 1000 句生存必备', tag: '1000 句 · EN · ES · CN · VN', uiLang: '界面语言',
@@ -303,7 +314,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
       vpEmpty: '本设备没有该语音——将自动跳过此语言。', vpAuto: '自动（{v}）', vpOff: '🔇 不朗读此语言',
       vpTest: '▶ 试听', vpRate: '⏩ 速度', vpDone: '完成',
       testOff: '此语言已关闭——请先选择语音再试听', sayOff: '此语言已关闭——请在 🎙 语音 中重新开启',
-      noMean: '此词没有单独释义——请看下方整句意思。', noMeanSel: '所选内容暂无释义。', vpRec: '🎧 {v}（录音 · {n} 句）', vpNote2: '勾选要听的语言，选择语音（▶ 试听），然后点“应用”。', vpApply: '✓ 应用', vpCancel: '取消', vpApplied: '✓ 已应用语音设置', vpOnTitle: '朗读此语言', ltTitle: '开启/关闭朗读此语言', noRec: '这句还没有录音'
+      noMean: '此词没有单独释义——请看下方整句意思。', noMeanSel: '所选内容暂无释义。', vpRec: '🎧 {v}（录音 · {n} 句）', tocPin: '固定目录', tocUnpin: '取消固定目录', tocClose: '关闭', vpNote2: '勾选要听的语言，选择语音（▶ 试听），然后点“应用”。', vpApply: '✓ 应用', vpCancel: '取消', vpApplied: '✓ 已应用语音设置', vpOnTitle: '朗读此语言', ltTitle: '开启/关闭朗读此语言', noRec: '这句还没有录音'
     }
   };
   /* tên Phần/bài, bối cảnh, tiêu đề bài đọc — gắn vào phần tử có data-tk */
@@ -471,7 +482,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
       showMini(false);
       cancelSpeech();
       document.querySelectorAll('.playing').forEach(function(el){ el.classList.remove('playing'); });
-      if (this.activeBtn){ this.activeBtn.classList.remove('playing'); this.activeBtn.textContent = this.activeBtn.dataset.label || this.activeBtn.textContent; }
+      if (this.activeBtn){ this.activeBtn.classList.remove('playing'); this.activeBtn.textContent = this.activeBtn.dataset.label || this.activeBtn.textContent; this.activeBtn.style.minWidth = ''; }
       this.activeBtn = null;
       updateStatus('');
     },
@@ -481,6 +492,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
       showMini(true);
       if (this.activeBtn){
         this.activeBtn.dataset.label = this.activeBtn.textContent;
+        this.activeBtn.style.minWidth = this.activeBtn.offsetWidth + 'px';   /* giữ độ rộng -> nút bên cạnh không nhảy */
         this.activeBtn.classList.add('playing');
         this.activeBtn.textContent = T('stop');
       }
@@ -493,7 +505,9 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
       document.querySelectorAll('.now-row').forEach(function(el){ el.classList.remove('now-row'); });
       if (item.el){
         item.el.classList.add('now-row');
-        try { item.el.scrollIntoView({behavior:'smooth', block:'center'}); } catch(e){}
+        /* chỉ cuộn khi câu sắp ra khỏi tầm nhìn (tránh giật màn hình mỗi câu) */
+        var rr = item.el.getBoundingClientRect(), tb = document.querySelector('.topbar').getBoundingClientRect().bottom;
+        if (rr.top < tb + 8 || rr.bottom > window.innerHeight - 90) { try { item.el.scrollIntoView({behavior:'smooth', block:'center'}); } catch(e){} }
       }
       updateStatus(T('reading', {i: self.i + 1, n: self.queue.length}));
       var tok = self._tok;
@@ -682,14 +696,24 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
     }
   });
 
-  // nav close sidebar on mobile
-  document.querySelectorAll('[data-nav]').forEach(function(a){
-    a.addEventListener('click', function(){ document.getElementById('sidebar').classList.remove('open'); });
+  /* ☰ mục lục: mở/đóng; 📌 ghim (chỉ màn ≥1100px) thì mở sẵn và không che nội dung */
+  var BODY = document.body, wide = matchMedia('(min-width: 1100px)');
+  function pinnedNow(){ return BODY.classList.contains('toc-pinned') && wide.matches; }
+  function setToc(open){ BODY.classList.toggle('toc-open', open); }
+  function paintPin(){ var b = document.getElementById('tocPin'); var on = BODY.classList.contains('toc-pinned'); b.setAttribute('aria-pressed', String(on)); b.title = T(on ? 'tocUnpin' : 'tocPin'); document.getElementById('tocClose').title = T('tocClose'); }
+  try { if (localStorage.getItem('op0-toc-pin') === '1') { BODY.classList.add('toc-pinned'); if (wide.matches) setToc(true); } } catch(e){}
+  paintPin();
+  document.getElementById('menuBtn').addEventListener('click', function(){ setToc(!BODY.classList.contains('toc-open')); });
+  document.getElementById('tocClose').addEventListener('click', function(){ setToc(false); });
+  document.getElementById('tocBackdrop').addEventListener('click', function(){ setToc(false); });
+  document.getElementById('tocPin').addEventListener('click', function(){
+    var on = !BODY.classList.contains('toc-pinned');
+    BODY.classList.toggle('toc-pinned', on); setToc(true); paintPin();
+    try { localStorage.setItem('op0-toc-pin', on ? '1' : '0'); } catch(e){}
   });
-
-  var menuBtn = document.getElementById('menuBtn');
-  if (menuBtn) menuBtn.addEventListener('click', function(){
-    document.getElementById('sidebar').classList.toggle('open');
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && BODY.classList.contains('toc-open') && !pinnedNow()) setToc(false); });
+  document.querySelectorAll('[data-nav]').forEach(function(a){
+    a.addEventListener('click', function(){ if (!pinnedNow()) setToc(false); });
   });
 
   var toggleBtn = document.getElementById('toggleSurvival');
@@ -789,7 +813,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
     }
     set('#sideTag', 'tag');
     var ul = document.getElementById('uiLang'); ul.value = UILANG; ul.title = T('uiLang'); ul.setAttribute('aria-label', T('uiLang'));
-    set('#menuBtn', 'menu'); set('#themeBtn', 'theme');
+    set('#menuBtn', 'menu'); set('#themeBtn', 'theme'); paintPin();
     set('#toggleSurvival', document.body.classList.contains('hide-normal') ? 'survAll' : 'survOnly');
     set('#hideAllBtn', document.getElementById('hideAllBtn').classList.contains('active') ? 'showAll' : 'hideAll');
     label(document.getElementById('playAllBtn'), T('playAll'));
@@ -851,6 +875,8 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
     if (t.closest('#toggleSurvival')) return send('toggle_survival');
     if (t.closest('#themeBtn')) return send('toggle_theme');
     if (t.closest('#voiceBtn')) return send('open_voice_panel');
+    if (t.closest('#menuBtn')) return send('toggle_toc');
+    if (t.closest('#tocPin')) return send('pin_toc');
     if (t.closest('#voiceApply')) return send('apply_voices');
     if ((el = t.closest('[data-nav]'))) return send('section_view', { part: (el.getAttribute('data-ga') || el.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 90) });
   }, true);
