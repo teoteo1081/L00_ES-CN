@@ -57,6 +57,8 @@ a{color:var(--accent2);text-decoration:none}
   background:var(--panel);color:var(--ink);cursor:pointer;
 }
 .topbar button.active{border-color:var(--accent2);color:var(--accent2)}
+.topbar .qv{font-size:13px;display:inline-flex;align-items:center;gap:4px}
+.topbar .qv select{max-width:190px}
 .topbar .rate-lbl{font-size:13px;display:inline-flex;align-items:center;gap:4px}
 .topbar .hint{font-size:12px;color:var(--sub)}
 h2{font-size:22px;border-bottom:2px solid var(--gold);padding-bottom:6px;margin:0}
@@ -174,6 +176,8 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
       <button id="toggleSurvival">★ Survival sentences only</button>
       <button id="hideAllBtn">🙈 Hide all VN meanings</button>
       <button id="playAllBtn">▶ Read everything</button>
+      <label class="qv">🇺🇸 <select id="qvEN" data-vlang="en-US"></select></label>
+      <label class="qv">🇻🇳 <select id="qvVI" data-vlang="vi-VN"></select></label>
       <label class="rate-lbl" title="Reading speed">⏩ <select id="topRate" data-rate title="Reading speed"></select></label>
       <button id="voiceBtn" title="Pick a voice for each language, or mute the ones you don't want to hear">🎙 Voices</button>
       <span class="hint" id="speakStatus"></span>
@@ -197,7 +201,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
       <p><b>✿ Nhiệm vụ hoàn thành! You did it! ¡Lo lograste! 你做到了！Bạn làm được rồi! ✿</b></p>
     </section>
 
-    <footer>Tự học · tạo từ Operation_0-Chunks_1000_cau_EN_ES_CN_VN.md</footer>
+    <footer>Tự học · tạo từ Operation_0-Chunks_1000_cau_EN_ES_CN_VN.md · 🎧 Giọng thu sẵn: ElevenLabs</footer>
   </main>
 </div>
 
@@ -229,7 +233,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
       vpEmpty: 'No voice on this device — this language will be skipped.', vpAuto: 'Auto ({v})', vpOff: '🔇 Don\'t read this language',
       vpTest: '▶ Test', vpRate: '⏩ Speed', vpDone: 'Done',
       testOff: 'This language is muted — pick a voice, then test', sayOff: 'This language is muted — turn it back on in 🎙 Voices',
-      noMean: 'No separate meaning for this word — see the full sentence meaning below.', noMeanSel: 'No meaning for this selection.'
+      noMean: 'No separate meaning for this word — see the full sentence meaning below.', noMeanSel: 'No meaning for this selection.', vpRec: '🎧 {v} (recorded · {n})', noRec: 'No recorded voice for this sentence yet'
     },
     vi: {
       title: 'Operation 0 → Chunks · 1000 câu sống còn', tag: '1000 câu · EN · ES · CN · VN', uiLang: 'Ngôn ngữ giao diện',
@@ -252,7 +256,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
       vpEmpty: 'Máy này chưa có giọng — sẽ tự bỏ qua tiếng này.', vpAuto: 'Tự chọn ({v})', vpOff: '🔇 Không đọc tiếng này',
       vpTest: '▶ Nghe thử', vpRate: '⏩ Tốc độ', vpDone: 'Xong',
       testOff: 'Tiếng này đang tắt — chọn 1 giọng rồi nghe thử', sayOff: 'Tiếng này đang tắt đọc — bật lại trong 🎙 Giọng đọc',
-      noMean: 'Chưa có nghĩa riêng cho từ này — xem nghĩa cả câu bên dưới.', noMeanSel: 'Chưa có nghĩa cho đoạn này.'
+      noMean: 'Chưa có nghĩa riêng cho từ này — xem nghĩa cả câu bên dưới.', noMeanSel: 'Chưa có nghĩa cho đoạn này.', vpRec: '🎧 {v} (thu sẵn · {n} câu)', noRec: 'Câu này chưa có giọng thu sẵn'
     },
     es: {
       title: 'Operation 0 → Chunks · 1000 frases de supervivencia', tag: '1000 frases · EN · ES · CN · VN', uiLang: 'Idioma de la interfaz',
@@ -275,7 +279,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
       vpEmpty: 'No hay voz en este dispositivo: se omitirá este idioma.', vpAuto: 'Automático ({v})', vpOff: '🔇 No leer este idioma',
       vpTest: '▶ Probar', vpRate: '⏩ Velocidad', vpDone: 'Listo',
       testOff: 'Este idioma está silenciado: elige una voz y prueba', sayOff: 'Este idioma está silenciado: actívalo en 🎙 Voces',
-      noMean: 'Esta palabra no tiene significado propio: mira el significado de la frase abajo.', noMeanSel: 'No hay significado para esta selección.'
+      noMean: 'Esta palabra no tiene significado propio: mira el significado de la frase abajo.', noMeanSel: 'No hay significado para esta selección.', vpRec: '🎧 {v} (grabada · {n})', noRec: 'Esta frase aún no tiene voz grabada'
     },
     zh: {
       title: 'Operation 0 → Chunks · 1000 句生存必备', tag: '1000 句 · EN · ES · CN · VN', uiLang: '界面语言',
@@ -298,7 +302,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
       vpEmpty: '本设备没有该语音——将自动跳过此语言。', vpAuto: '自动（{v}）', vpOff: '🔇 不朗读此语言',
       vpTest: '▶ 试听', vpRate: '⏩ 速度', vpDone: '完成',
       testOff: '此语言已关闭——请先选择语音再试听', sayOff: '此语言已关闭——请在 🎙 语音 中重新开启',
-      noMean: '此词没有单独释义——请看下方整句意思。', noMeanSel: '所选内容暂无释义。'
+      noMean: '此词没有单独释义——请看下方整句意思。', noMeanSel: '所选内容暂无释义。', vpRec: '🎧 {v}（录音 · {n} 句）', noRec: '这句还没有录音'
     }
   };
   /* tên Phần/bài, bối cảnh, tiêu đề bài đọc — gắn vào phần tử có data-tk */
@@ -327,7 +331,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
   // ---------- speech ----------
   var synth = window.speechSynthesis;
   var voices = [];
-  function loadVoices(){ voices = synth ? synth.getVoices() : []; if (typeof LANGS !== 'undefined' && LANGS) renderVoicePanel(); }
+  function loadVoices(){ voices = synth ? synth.getVoices() : []; if (typeof LANGS !== 'undefined' && LANGS) { renderVoicePanel(); renderQuick(); } }
   loadVoices();
   if (synth) synth.onvoiceschanged = loadVoices;
 
@@ -341,15 +345,37 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
                ["zh-CN","🇨🇳 中文","很高兴认识你。你今天好吗？"],
                ["vi-VN","🇻🇳 Tiếng Việt","Rất vui được gặp bạn. Hôm nay bạn khỏe không?"]];
   var OFF = "__off__";
+  /* 🎧 giọng thu sẵn (ElevenLabs): {lang: {key: {name, dir, files: {câu: file.mp3}}}} — embed_audio.py tự điền */
+  var AUDIO = {}; /*AUDIO>*/ AUDIO = {"vi-VN":{"alice":{"name":"Alice","dir":"audio/vi-alice/","files":{"Xin chào, tôi tên Lan, tôi làm ở Sol Tech.":"374501b4a372.mp3","Rất vui được gặp anh/chị. Đây là danh thiếp của tôi.":"13b5d163ede8.mp3","Anh/chị làm nghề gì?":"51735c5139ae.mp3","Tôi phụ trách mảng bán hàng ở châu Á.":"d8927980af97.mp3","Công ty anh/chị làm về lĩnh vực gì?":"84cf3af4fcc7.mp3","Chúng tôi cung cấp phần mềm cho doanh nghiệp nhỏ.":"0f8d10b84e93.mp3","Trụ sở chính của chúng tôi ở TP. Hồ Chí Minh.":"50724a88104f.mp3","Mình giữ liên lạc nhé.":"123ad56ec5dc.mp3","Chúng tôi có khoảng năm mươi nhân viên.":"fd739cdbc47d.mp3","Chúng tôi thành lập công ty cách đây năm năm.":"886f60a6f446.mp3","Anh/chị làm trong ngành này bao lâu rồi?":"1cbe5bfd37de.mp3","Khách hàng chính của anh/chị là ai?":"3b05d0e05832.mp3","Chúng tôi chủ yếu làm việc với các nhà bán lẻ.":"9d46ac9e44ae.mp3","Tôi đã nghe nhiều về công ty anh/chị.":"ad0864b040fe.mp3","Anh/chị đến dự hội nghị phải không?":"e27eda9ce9c5.mp3","Đây là lần đầu tôi tham gia sự kiện này.":"9c34bc8a3d9a.mp3","Cho tôi xin địa chỉ email của anh/chị được không?":"91ce8de4daaf.mp3","Tôi rất muốn tìm hiểu thêm về công việc của anh/chị.":"566aa8c02e0b.mp3","Để tôi giới thiệu đồng nghiệp của tôi, Carlos.":"d79dfc5310b9.mp3","Chúng tôi đang tìm đối tác mới.":"46523a2d7f47.mp3","Có lẽ chúng ta có thể hợp tác.":"7902d1a3a50f.mp3","Tuần sau tôi sẽ gửi email cho anh/chị.":"9fcf4835799e.mp3","Chúc anh/chị dự hội nghị vui vẻ.":"adb066325ca3.mp3","Rất hân hạnh được nói chuyện với anh/chị.":"9ca62fefecf3.mp3","Mong sớm gặp lại anh/chị.":"7f9cc897f5b1.mp3","Chúng ta bắt đầu họp nhé.":"7a5e78cc3186.mp3","Hôm nay họp những nội dung gì?":"ecda35927cdc.mp3","Bạn cập nhật tình hình cho mọi người được không?":"84e96456d0e2.mp3","Tôi đồng ý với điều đó.":"0aaaac517db8.mp3","Tôi nhìn nhận vấn đề hơi khác.":"64a7e0eae2d0.mp3","Bạn giải thích lại được không?":"7346bef791a7.mp3","Ai chịu trách nhiệm việc này?":"1f429c9263fa.mp3","Mình tóm tắt các việc cần làm nhé.":"60f605d74343.mp3","Chúng ta có ba chủ đề cần bàn.":"3ca07473c047.mp3","Mình bám sát chủ đề nhé.":"58d1cb7127a6.mp3","Có ai có câu hỏi gì không?":"a1d8630f8e0f.mp3","Mình nghe ý kiến nhóm marketing nhé.":"894a6279e090.mp3","Doanh số tháng này tăng mười phần trăm.":"1235d3e88310.mp3","Chúng ta đang chậm tiến độ.":"f3358c73d264.mp3","Hôm nay chúng ta cần đưa ra quyết định.":"415fe8ae5f7e.mp3","Ưu và nhược điểm là gì?":"665a3a6ef680.mp3","Mình biểu quyết nhé.":"f64e81a65856.mp3","Mình bàn riêng chuyện này sau buổi họp được không?":"81472005150d.mp3","Tôi muốn bổ sung một ý.":"d486a5a24cf4.mp3","Xin lỗi cho tôi ngắt lời một chút.":"efa5e832aa01.mp3","Ý tưởng tuyệt vời đó.":"df47c061d397.mp3","Chuyển sang ý tiếp theo nhé.":"44ae14706d56.mp3","Chúng ta sắp hết giờ rồi.":"be5c4c696273.mp3","Tôi sẽ gửi biên bản họp sau.":"0c79556aa7e6.mp3","Cảm ơn mọi người đã dành thời gian.":"9dd05d290470.mp3","Giá tốt nhất của anh/chị là bao nhiêu?":"e040be9d7b16.mp3","Mức đó hơi cao hơn ngân sách của chúng tôi.":"da989d72bb78.mp3","Giá có thể linh động được không?":"b248f8231944.mp3","Nếu chúng tôi đặt số lượng lớn hơn thì sao?":"bf622223c305.mp3","Chúng tôi có thể chấp nhận các điều khoản này.":"154882044e3d.mp3","Tôi cần hỏi lại quản lý của tôi.":"c3f8b1a99ea0.mp3","Hãy tìm giải pháp có lợi cho cả hai bên.":"2b1b37398b32.mp3","Vậy chúng ta chốt nhé?":"cd51945a2784.mp3","Anh/chị có thể giảm giá không?":"a0c5fbea5299.mp3","Chúng tôi có thể giảm năm phần trăm.":"57ed62bc93de.mp3","Điều kiện thanh toán thế nào?":"c46dfe1933a5.mp3","Chúng tôi thường thanh toán trong ba mươi ngày.":"0b9c08fec841.mp3","Anh/chị giao hàng trước cuối tháng được không?":"f64df118d4fa.mp3","Đó là đề nghị cuối cùng của chúng tôi.":"9d12e011f744.mp3","Tôi hiểu lập trường của anh/chị.":"d6bea7d24e1e.mp3","Để tôi suy nghĩ thêm.":"1b2d204a7c92.mp3","Chúng tôi muốn thời gian bảo hành dài hơn.":"2a2ac0291acf.mp3","Phí vận chuyển nên được tính sẵn trong giá.":"bfa36ce0e749.mp3","Mỗi bên nhường một chút nhé.":"5a00cad493c5.mp3","Mình ghi điều đó thành văn bản được không?":"dd5196bad9da.mp3","Đối thủ của chúng tôi chào giá thấp hơn.":"9dfd53331563.mp3","Với chúng tôi, chất lượng quan trọng hơn giá.":"98f71476e9e1.mp3","E rằng chúng tôi không thể giảm thêm.":"676444ad7d7c.mp3","Tuần sau mình ký hợp đồng nhé.":"8a4249f7263d.mp3","Rất hân hạnh được hợp tác với anh/chị.":"665d0141ca2c.mp3","Hôm nay tôi có thể giúp gì cho anh/chị?":"1f0fa5b896b3.mp3","Để tôi giới thiệu sản phẩm mới của chúng tôi.":"86f45c4a7c23.mp3","Chính xác thì anh/chị đang tìm gì?":"e24c5c952d21.mp3","Sản phẩm này sẽ giúp anh/chị tiết kiệm thời gian.":"7791f114ad01.mp3","Xin lỗi vì sự bất tiện.":"0f8d50ba790e.mp3","Tôi sẽ kiểm tra ngay.":"c14acbc22312.mp3","Cho tôi xin mã đơn hàng của anh/chị.":"7f4343965229.mp3","Tôi còn giúp gì được cho anh/chị nữa không?":"bfe2671db10a.mp3","Ngân sách của anh/chị là bao nhiêu?":"a7b4346c9ca2.mp3","Chúng tôi có dùng thử miễn phí ba mươi ngày.":"2b73fda20e46.mp3","Đây là mẫu bán chạy nhất của chúng tôi.":"331e803cb145.mp3","Sản phẩm có bảo hành một năm.":"6ef258bb7429.mp3","Anh/chị có muốn xem demo không?":"410cba4537a0.mp3","Nhiều khách hàng của chúng tôi rất hài lòng.":"2486504efdfe.mp3","Giá đã bao gồm lắp đặt.":"72cdb9f69822.mp3","Anh/chị muốn nhận hàng khi nào?":"9b24266b966b.mp3","Đơn hàng của anh/chị đã được gửi đi.":"9785ffdaa117.mp3","Chúng tôi sẽ gửi sản phẩm thay thế.":"27365b9cfd01.mp3","Anh/chị có thể trả hàng trong vòng mười bốn ngày.":"2fa69348ddfc.mp3","Chúng tôi sẽ hoàn tiền đầy đủ.":"27aa52c5f41a.mp3","Cảm ơn anh/chị đã kiên nhẫn.":"59be97f4b32d.mp3","Tôi hoàn toàn hiểu sự bực bội của anh/chị.":"eae83a40d9ed.mp3","Để tôi chuyển anh/chị sang bộ phận phù hợp.":"46926ad0f456.mp3","Chúng tôi rất trân trọng góp ý của anh/chị.":"2447b51ceaad.mp3","Chúc anh/chị một ngày tuyệt vời!":"fdb83145969e.mp3","Đây là số liệu quý này.":"d079277ecb74.mp3","Doanh thu tăng mười lăm phần trăm.":"a2fc06573b5d.mp3","Chi phí quá cao.":"7c83f4866266.mp3","Chúng ta cần cắt giảm chi tiêu.":"8910dfe74b01.mp3","Việc này có nằm trong ngân sách không?":"cc1f273093a6.mp3","Vui lòng gửi hóa đơn cho tôi.":"0eece6847c52.mp3","Khoản thanh toán này đã quá hạn.":"69484de43eb4.mp3","Biên lợi nhuận của chúng ta là bao nhiêu?":"1a1eab91d11e.mp3","Lợi nhuận ròng của chúng ta là hai triệu đô.":"d184868e8189.mp3","Dòng tiền ổn định.":"8cdfe31a8a5f.mp3","Dự án này bị vượt ngân sách.":"26789e61bdcd.mp3","Mình xem lại báo cáo tài chính nhé.":"07151522be48.mp3","Doanh số giảm trong quý hai.":"f19bdde106e2.mp3","Chúng tôi dự kiến năm sau sẽ tăng trưởng.":"abe8c2e07128.mp3","Bạn chuẩn bị bản dự báo được không?":"fe5bd5633548.mp3","Báo cáo phải nộp vào thứ Hai.":"f616cc2d4c6f.mp3","Hôm qua chúng tôi đã nhận được tiền.":"ffb505067164.mp3","Vui lòng duyệt khoản chi này.":"756320f0497b.mp3","Tôi sẽ đính kèm các biên lai.":"15264df58268.mp3","Chi phí lớn nhất của chúng ta là lương.":"12d681915eee.mp3","Các con số không khớp.":"a822abbe86da.mp3","Chúng ta nên đầu tư thiết bị mới.":"bd5163b75569.mp3","Tỷ suất hoàn vốn là bao nhiêu?":"d0423574fcc3.mp3","Mình so sánh năm nay với năm ngoái nhé.":"dd9aa2e8178d.mp3","Tháng sau có kiểm toán.":"a99ac0d065a7.mp3","Dự án tiến triển thế nào rồi?":"8629404eaa19.mp3","Chúng ta đang đúng tiến độ.":"2401c7d90a2d.mp3","Hạn chót là khi nào?":"25ace73a128e.mp3","Chúng ta gặp một vấn đề.":"84ff24ee9ab4.mp3","Bạn cần tôi làm gì?":"befb159d78cb.mp3","Tôi sẽ xong trước thứ Sáu.":"b914f07da70a.mp3","Có thể lùi hạn chót được không?":"8ab01f3a54d2.mp3","Mình sắp xếp thứ tự ưu tiên nhé.":"4db53844efc1.mp3","Ai đang làm việc này?":"7e0da250e7f6.mp3","Mình chia nhỏ việc này ra nhé.":"78fba7b2c2e2.mp3","Giai đoạn một đã hoàn thành.":"20597102dce6.mp3","Chúng ta đang chờ phê duyệt.":"f0300ca1743b.mp3","Có nguy cơ bị trễ.":"5a67cbf89c75.mp3","Chúng ta cần thêm nguồn lực.":"bdd03bb3fde5.mp3","Mình lên lịch họp kiểm tra tiến độ nhé.":"cfbd0f59eafc.mp3","Vui lòng cập nhật lại tiến trình.":"e2285c68b8e6.mp3","Khách hàng đã thay đổi yêu cầu.":"1854b5df254c.mp3","Đây là ưu tiên hàng đầu.":"6c594623c244.mp3","Nếu bị kẹt thì báo tôi nhé.":"8f10234d61e8.mp3","Làm tốt lắm, cả nhóm đã làm rất tuyệt.":"62bf60cc204f.mp3","Chúng ta cần thử nghiệm trước.":"aa05cc4fed76.mp3","Ngày ra mắt là mùng một tháng Sáu.":"49edcdd005f1.mp3","Điều gì đang cản trở bạn?":"529a484ba6d5.mp3","Mình xem lại những gì đã làm tốt nhé.":"c68b3e4f61a0.mp3","Dự án cuối cùng cũng xong!":"c9c4649c82de.mp3","Hãy giới thiệu về bản thân bạn.":"943713a4629c.mp3","Vì sao bạn muốn công việc này?":"290241eb42fb.mp3","Điểm mạnh của bạn là gì?":"9d072bb28488.mp3","Tôi có ba năm kinh nghiệm bán hàng.":"8f64aec88117.mp3","Tôi học hỏi rất nhanh.":"19badfb41c15.mp3","Khi nào bạn có thể bắt đầu làm?":"7150b35d6ed7.mp3","Mức lương dao động bao nhiêu?":"1b6cab26e10e.mp3","Bạn có câu hỏi nào cho chúng tôi không?":"c07ecfc3accc.mp3","Điểm yếu lớn nhất của bạn là gì?":"ab969ae0faa2.mp3","Tôi làm việc nhóm tốt.":"3d39313472f5.mp3","Tôi đang tìm thử thách mới.":"3101ec19eff9.mp3","Vì sao bạn nghỉ công việc trước?":"c43720b9e63e.mp3","Năm năm nữa bạn thấy mình ở đâu?":"528cef377fe3.mp3","Một ngày làm việc bình thường ở vị trí này thế nào?":"b88b8d934ce3.mp3","Vị trí này là toàn thời gian phải không?":"b85b7f63f676.mp3","Có thể làm từ xa không?":"380c5f1f8ad9.mp3","Công ty có những phúc lợi gì?":"ef07ac633ca5.mp3","Tôi rất quan tâm đến vị trí này.":"5d381e89fdd5.mp3","Đây là hồ sơ xin việc của tôi.":"4ff20f20a818.mp3","Tôi nói được tiếng Anh và một chút tiếng Tây Ban Nha.":"a156f4bf7bf0.mp3","Tuần sau chúng tôi sẽ liên hệ bạn.":"8e28c973901d.mp3","Chúc mừng, bạn đã được nhận!":"b0c87eecf087.mp3","Chào mừng bạn vào nhóm!":"641ce32ebef8.mp3","Cảm ơn anh/chị đã cho tôi cơ hội.":"a565f10459c9.mp3","Tôi rất mong được làm việc cùng mọi người.":"d8cb650c7181.mp3","Anh/chị gửi hợp đồng cho chúng tôi được không?":"affadd7cf2db.mp3","Vui lòng đọc kỹ trước khi ký.":"99cd791a3f29.mp3","Tôi ký ở đâu?":"cf0049c4ee47.mp3","Tôi có câu hỏi về điều khoản này.":"d237d4752d7d.mp3","Luật sư của chúng tôi cần xem lại.":"99acc2796625.mp3","Hợp đồng bắt đầu khi nào?":"3d9108886659.mp3","Hợp đồng có thời hạn bao lâu?":"f775538c5ca8.mp3","Chúng tôi muốn sửa một chút.":"5e472299b0d8.mp3","Hợp đồng có hiệu lực hai năm.":"f6ed3db577cf.mp3","Chúng tôi có thể hủy sớm không?":"1b9b66eb4f35.mp3","Giao hàng trễ sẽ bị phạt.":"5c6db77f01f8.mp3","Mọi thông tin đều được bảo mật.":"2e0576feeb7d.mp3","Chúng ta sẽ ký hai bản.":"472eaeef17bb.mp3","Vui lòng ký tắt vào mỗi trang.":"eb22adfe68f0.mp3","Các điều khoản đã rõ ràng.":"0f1a71cd8c7d.mp3","Chúng tôi đồng ý gia hạn hợp đồng.":"b15c524cc4ac.mp3","Người liên hệ là ai?":"38800d741837.mp3","Đây là thỏa thuận tiêu chuẩn của chúng tôi.":"c1dfd843fcc0.mp3","Chúng tôi cần chữ ký của anh/chị trước thứ Sáu.":"c70a4be4d209.mp3","Tôi sẽ gửi bản đã ký cho anh/chị.":"67ba1b330a4b.mp3","Hãy xây dựng quan hệ hợp tác lâu dài.":"0b92d1b57ca5.mp3","Cả hai bên phải đồng ý.":"e498b198f80f.mp3","Phần này chúng tôi không chấp nhận được.":"0c591b012a6e.mp3","Mình bàn tiếp ở buổi họp sau nhé.":"41e64b563736.mp3","Chúng tôi mong được hợp tác.":"fcbd75f5f703.mp3","Tôi đã đặt chỗ dưới tên Lan.":"adf36a199771.mp3","Cuộc họp ngày mai lúc mấy giờ?":"aaf410535dc1.mp3","Anh/chị gọi giúp tôi một chiếc taxi được không?":"95f6998d60eb.mp3","Cảm ơn anh/chị đã mời chúng tôi.":"61fd7e58a070.mp3","Chào mừng đến văn phòng của chúng tôi.":"43ffd12af1ca.mp3","Chuyến bay của anh/chị ổn chứ?":"cb241c9abc2d.mp3","Cho tôi xin hóa đơn được không?":"4f013a16e83c.mp3","Phòng họp ở đâu?":"8fb8bdbf780c.mp3","Chuyến bay của tôi bị hoãn.":"4f3be2aa732c.mp3","Mười phút nữa tôi tới.":"d7ede34eb723.mp3","Tối nay để tôi mời anh/chị đi ăn tối.":"88050ff4877b.mp3","Anh/chị muốn uống gì?":"7a7398e61743.mp3","Anh/chị có dị ứng thức ăn nào không?":"065b650cd690.mp3","Anh/chị đã thử đồ ăn Việt Nam chưa?":"771ee56e55dc.mp3","Đây là đặc sản địa phương.":"c2a81fd2d66f.mp3","Anh/chị ở lại bao lâu?":"51e854f3f0f6.mp3","Tôi đến đây công tác.":"5b15f684c04e.mp3","Có bao gồm bữa sáng không?":"99dd15aa65bb.mp3","Tôi muốn trả phòng.":"7259060ee9fe.mp3","Anh/chị giới thiệu giúp một nhà hàng ngon được không?":"052e2958a4ba.mp3","Để tôi dẫn anh/chị đi tham quan văn phòng.":"79d1d8134e0b.mp3","Cứ tự nhiên như ở nhà nhé.":"a0fc0ae1745e.mp3","Nâng ly! Chúc chúng ta thành công!":"32c812d16898.mp3","Chúc anh/chị về an toàn.":"30e398b70bf6.mp3","Mong anh/chị đã có chuyến thăm vui vẻ.":"28bac0e4cd1c.mp3","Chúng ta có một vấn đề khẩn cấp.":"68b2f9f86ada.mp3","Chính xác đã xảy ra chuyện gì?":"b21c7cc02ab8.mp3","Mọi người bình tĩnh nhé.":"df59fdfa5953.mp3","Chúng tôi đã sai và sẽ khắc phục.":"c7224196292f.mp3","Những ai cần được biết việc này?":"62388df2cc3f.mp3","Chúng ta có những phương án nào?":"93965ad0276f.mp3","Tôi sẽ cập nhật thường xuyên cho bạn.":"f08325a5068c.mp3","Việc này sẽ không lặp lại.":"08f40b237ff6.mp3","Hệ thống bị sập rồi.":"61e4be9c9b84.mp3","Lô hàng bị trễ.":"9fa5491a7814.mp3","Khách hàng đang rất bực.":"a799c9b1f5dd.mp3","Chúng ta cần phương án B.":"a8d441dec95f.mp3","Mình tìm nguyên nhân gốc rễ nhé.":"975ff4d928fb.mp3","Sau này làm sao để phòng tránh?":"1f9731f18035.mp3","Tôi xin chịu toàn bộ trách nhiệm.":"a9949bd6d4fd.mp3","Chúng tôi đang tìm giải pháp.":"a92edb124338.mp3","Tối nay chắc sẽ sửa xong.":"44b4dcfae7bd.mp3","Mình có thể bồi thường cho khách không?":"20ba91ccc543.mp3","Mình gọi thẳng cho khách nhé.":"0ae07e88b29e.mp3","Vui lòng đừng chia sẻ ra ngoài nhóm.":"f14d714e0248.mp3","Chúng tôi sẽ xử lý.":"8b819779ea47.mp3","Vấn đề đã được giải quyết.":"e216061b1682.mp3","Cảm ơn anh/chị đã phản hồi nhanh.":"3fbadd8148c3.mp3","Mình rút kinh nghiệm từ việc này nhé.":"b97acb5bb398.mp3","Mọi người phối hợp rất tuyệt.":"98b06cdeafec.mp3"}}}}; /*<AUDIO*/
+  function recOf(lang){ var v = voicePref[lang]; if (!v || v.indexOf('el:') !== 0) return null; return (AUDIO[lang] || {})[v.slice(3)] || null; }
+  var curAudio = null;
+  function stopAudio(){ if (curAudio){ var a = curAudio; curAudio = null; a._stopped = true; a.onended = a.onerror = null; try { a.pause(); } catch(e){} } }
+  function cancelSpeech(){ if (synth) { synth.cancel(); } stopAudio(); }
+  function playFile(src, onend){
+    stopAudio();
+    var a = new Audio(src); curAudio = a;
+    a.playbackRate = RATE; a.preservesPitch = true;
+    function done(){ if (a._stopped) return; a._stopped = true; if (curAudio === a) curAudio = null; if (onend) onend(); }
+    a.onended = done; a.onerror = done;
+    var p = a.play(); if (p && p.catch) p.catch(done);
+  }
   /* ⏩ tốc độ đọc — dùng chung mọi tiếng, nhớ theo máy */
   var RATE = 0.92;
   try { var r0 = parseFloat(localStorage.getItem('op0-rate')); if (r0 >= 0.1 && r0 <= 2) RATE = r0; } catch(e){}
   var RATES = [0.3, 0.4, 0.5, 0.6, 0.75, 0.85, 0.92, 1, 1.15, 1.3, 1.5];
   if (RATES.indexOf(RATE) < 0) RATES.push(RATE);
   function rateOptions(){ return RATES.slice().sort(function(a,b){return a-b;}).map(function(r){ return '<option value="' + r + '"' + (r === RATE ? ' selected' : '') + '>' + r + 'x</option>'; }).join(''); }
-  function setRate(r){ RATE = r; try { localStorage.setItem('op0-rate', String(r)); } catch(e){} document.querySelectorAll('[data-rate]').forEach(function(s){ s.value = String(r); }); }
+  function setRate(r){ RATE = r; if (curAudio) curAudio.playbackRate = r; try { localStorage.setItem('op0-rate', String(r)); } catch(e){} document.querySelectorAll('[data-rate]').forEach(function(s){ s.value = String(r); }); }
   var voicePref = {};
   try { voicePref = JSON.parse(localStorage.getItem('op0-voices')) || {}; } catch(e){ voicePref = {}; }
+  var REC_DEF = {'vi-VN': 'el:alice', 'en-US': 'el:laura'};
+  Object.keys(REC_DEF).forEach(function(l){
+    var k = REC_DEF[l].slice(3), flag = 'op0-rec-' + l;
+    if (!(AUDIO[l] && AUDIO[l][k])) return;
+    var done = null; try { done = localStorage.getItem(flag); } catch(e){}
+    if (!done && (!(l in voicePref) || voicePref[l] === '' || (l === 'vi-VN' && voicePref[l] === OFF))) voicePref[l] = REC_DEF[l];
+    try { localStorage.setItem(flag, '1'); } catch(e){}
+  });
   if (!('vi-VN' in voicePref)) voicePref['vi-VN'] = OFF;
   function savePref(){ try { localStorage.setItem('op0-voices', JSON.stringify(voicePref)); } catch(e){} }
   function langVoices(lang){
@@ -372,21 +398,33 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
     return list[0] || null;
   }
 
+  function voiceOptions(lang){
+    var list = langVoices(lang), cur = voicePref[lang] || '', out = '', recs = AUDIO[lang] || {};
+    Object.keys(recs).forEach(function(k){
+      var v = 'el:' + k;
+      out += '<option value="' + v + '"' + (cur === v ? ' selected' : '') + '>' + T('vpRec', {v: recs[k].name, n: Object.keys(recs[k].files).length}) + '</option>';
+    });
+    if (list.length){
+      out += '<option value=""' + (cur === '' ? ' selected' : '') + '>' + T('vpAuto', {v: list[0].name.replace(/</g,'')}) + '</option>' +
+        list.map(function(v){ return '<option value="' + v.name.replace(/"/g,'&quot;') + '"' + (cur === v.name ? ' selected' : '') + '>' + v.name.replace(/</g,'') + '</option>'; }).join('');
+    }
+    return out + '<option value="' + OFF + '"' + (cur === OFF ? ' selected' : '') + '>' + T('vpOff') + '</option>';
+  }
+  function hasAnyVoice(lang){ return langVoices(lang).length || Object.keys(AUDIO[lang] || {}).length; }
+  function sampleText(lang){ var r = recOf(lang); return r ? Object.keys(r.files)[0] : LANGS.filter(function(L){ return L[0] === lang; })[0][2]; }
+  /* ô chọn giọng nhanh trên thanh công cụ (đổi được cả lúc đang đọc — áp dụng từ câu kế tiếp) */
+  function renderQuick(){ document.querySelectorAll('.qv select').forEach(function(sel){ sel.innerHTML = voiceOptions(sel.getAttribute('data-vlang')); }); }
   function renderVoicePanel(){
     var p = document.getElementById('voicePanel');
     if (!p) return;
     var html = '<h3>' + T('voice') + '</h3><p class="vp-note">' + T('vpNote') + '</p>';
     LANGS.forEach(function(L){
-      var list = langVoices(L[0]), cur = voicePref[L[0]] || '';
       html += '<div class="vp-row"><label>' + L[1] + '</label>';
-      if (!list.length){
+      if (!hasAnyVoice(L[0])){
         html += '<span class="vp-empty">' + T('vpEmpty') + '</span></div>';
         return;
       }
-      html += '<select data-vlang="' + L[0] + '">' +
-        '<option value=""' + (cur === '' ? ' selected' : '') + '>' + T('vpAuto', {v: list[0].name.replace(/</g,'')}) + '</option>' +
-        list.map(function(v){ return '<option value="' + v.name.replace(/"/g,'&quot;') + '"' + (cur === v.name ? ' selected' : '') + '>' + v.name.replace(/</g,'') + '</option>'; }).join('') +
-        '<option value="' + OFF + '"' + (cur === OFF ? ' selected' : '') + '>' + T('vpOff') + '</option>' +
+      html += '<select data-vlang="' + L[0] + '">' + voiceOptions(L[0]) +
         '</select><button class="vp-test" data-vtest="' + L[0] + '">' + T('vpTest') + '</button></div>';
     });
     html += '<div class="vp-row"><label>' + T('vpRate') + '</label><select data-rate>' + rateOptions() + '</select><span></span></div>';
@@ -395,8 +433,14 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
   }
 
   function speakOne(text, lang, onend){
-    if (!synth || !text) { if (onend) onend(); return; }
-    if (isOff(lang) || (voices.length && !langVoices(lang).length)) { if (onend) setTimeout(onend, 0); return; }
+    if (!text) { if (onend) onend(); return; }
+    if (isOff(lang)) { if (onend) setTimeout(onend, 0); return; }
+    var rec = recOf(lang);
+    if (rec){
+      if (rec.files[text]) { playFile(rec.dir + rec.files[text], onend); return; }
+      if (lang === 'vi-VN') { updateStatus(T('noRec')); if (onend) setTimeout(onend, 0); return; }   /* chưa thu câu này: giọng Việt của máy đọc dở -> bỏ qua */
+    }
+    if (!synth || (voices.length && !langVoices(lang).length)) { if (onend) setTimeout(onend, 0); return; }
     try {
       var u = new SpeechSynthesisUtterance(text);
       u.lang = lang;
@@ -416,7 +460,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
     stop: function(){
       this.playing = false; this.paused = false; this._tok++;
       showMini(false);
-      if (synth) synth.cancel();
+      cancelSpeech();
       document.querySelectorAll('.playing').forEach(function(el){ el.classList.remove('playing'); });
       if (this.activeBtn){ this.activeBtn.classList.remove('playing'); this.activeBtn.textContent = this.activeBtn.dataset.label || this.activeBtn.textContent; }
       this.activeBtn = null;
@@ -454,7 +498,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
     pause: function(){
       if (!this.playing || this.paused) return;
       this.paused = true; this._tok++;
-      if (synth) synth.cancel();
+      cancelSpeech();
       updateStatus(T('pausedAt', {i: this.i + 1, n: this.queue.length}));
       paintMini();
     },
@@ -561,8 +605,8 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
     var vt = e.target.closest('[data-vtest]');
     if (vt){
       var tl = vt.getAttribute('data-vtest');
-      var sample = LANGS.filter(function(L){ return L[0] === tl; })[0][2];
-      if (synth) synth.cancel();
+      var sample = sampleText(tl);
+      cancelSpeech();
       if (isOff(tl)) { updateStatus(T('testOff')); return; }
       speakOne(sample, tl);
       return;
@@ -591,7 +635,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
     if (one){
       var ol = one.getAttribute('data-lang');
       if (Player.playing) Player.stop();
-      if (synth) synth.cancel();
+      cancelSpeech();
       if (isOff(ol)) { updateStatus(T('sayOff')); return; }
       var row = one.closest('.lrow, .rpara');
       document.querySelectorAll('.now-row').forEach(function(el){ el.classList.remove('now-row'); });
@@ -657,11 +701,14 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
     if (sel.value) voicePref[l] = sel.value; else delete voicePref[l];
     if (l === 'vi-VN' && !sel.value) voicePref[l] = '';   /* đã tự chọn "Tự chọn" -> không ép tắt lại */
     savePref();
-    if (sel.value !== OFF) { if (synth) synth.cancel(); speakOne(LANGS.filter(function(L){ return L[0] === l; })[0][2], l); }
+    renderQuick();
+    var vpx = document.getElementById('voicePanel'); if (vpx && !vpx.hidden && !sel.closest('#voicePanel')) renderVoicePanel();
+    if (sel.value !== OFF && !Player.playing) { cancelSpeech(); speakOne(sampleText(l), l); }
   });
 
   document.getElementById('mpRate').innerHTML = rateOptions();
   document.getElementById('topRate').innerHTML = rateOptions();
+  renderQuick();
   /* phím tắt: Space = tạm dừng / đọc tiếp khi đang đọc */
   document.addEventListener('keydown', function(e){
     if (e.code !== 'Space' || !Player.playing) return;
@@ -696,7 +743,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
         if (w.classList.contains('py') || says[says.length - 1] !== sy || lang !== 'zh-CN') says.push(sy);
       });
       var text = lang === 'zh-CN' ? says.join('') : says.join(' ');
-      if (!isOff(lang)) { if (synth) synth.cancel(); speakOne(text, lang); }
+      if (!isOff(lang)) { cancelSpeech(); speakOne(text, lang); }
       var r = range.getBoundingClientRect();
       showTip(r.left, r.bottom, parts.length ? '🇻🇳 ' + parts.join('  ·  ') : T('noMeanSel'));
     }, 0);
@@ -732,6 +779,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
     set('#voicePanel', 'vpAria', 'aria-label');
     set('#mpRate', 'rateTitle', 'title'); set('#topRate', 'rateTitle', 'title'); set('.rate-lbl', 'rateTitle', 'title'); set('#mpStop', 'stopTitle', 'title');
     paintMini();
+    renderQuick();
     each('.toc-play', function(b){ b.title = T('tocPlayTitle', {n: +b.getAttribute('data-target').slice(2) + 1}); });
     each('.say-all-btn', function(b){
       var sc = b.getAttribute('data-scope');
