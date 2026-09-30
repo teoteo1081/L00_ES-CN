@@ -6714,8 +6714,9 @@ Tóm lại, giao tiếp giỏi không phải là nói hay như người bản x�
 
 **🎧 Giọng đọc thu sẵn (ElevenLabs, 2026-09-29/30)**
 - Tài khoản miễn phí **không dùng được giọng thư viện qua API** (Nhi/Tuyết/Ms.Thanh… cần gói trả phí) → TJ chọn giọng mặc định **Alice**.
-- Đã có: **250 câu tiếng Việt Part 1** → `audio/vi-alice/*.mp3` + `manifest.json` (≈4,4 MB). Trang ưu tiên phát file; câu chưa có file thì báo "chưa có giọng thu sẵn".
-- Chờ làm: giọng Mỹ **Laura / Brian** cho dòng tiếng Anh, tiếng Việt Part 2–4. Ước tính cả trang ≈ 100.000 ký tự (Alice + Laura + Brian) ≈ 5 tháng gói miễn phí.
+- Đã có: **đủ 1.007 câu/đoạn tiếng Việt** (Part 1–4 + bài đọc) → `audio/vi-alice/*.mp3` + `manifest.json` (≈19 MB), xong 2026-09-30 bằng 2 tài khoản ElevenLabs miễn phí dùng luân phiên (gói 10.000 lượt/tháng, **1 ký tự = 1 lượt** với Flash v2.5). Câu nào thiếu file của giọng đang chọn thì trang tự lấy giọng thu sẵn khác cùng tiếng (vd HoaiMy nếu sau này có).
+- 2 API key ElevenLabs cất trong **Supabase Vault** (project WordLoop `pqarpszsipbdugrumhfy`, tên `elevenlabs_key_1`, `elevenlabs_key_2`). `tools/update_audio.py` tự lấy key khi có `$env:SUPABASE_PAT`, luân phiên key khi hết lượt, rồi lấp chỗ trống bằng Microsoft HoaiMy (`tools/gen_edge_audio.py`, edge-tts miễn phí).
+- Chờ làm: giọng Mỹ **Laura / Brian** cho dòng tiếng Anh (~32.700 ký tự mỗi giọng). Ước tính cả trang ≈ 100.000 ký tự (Alice + Laura + Brian) ≈ 5 tháng gói miễn phí.
 - Công cụ trong `tools/` (chạy lại được, bỏ qua file đã có): đặt biến môi trường `K=<API key>` rồi `python tools/gen_audio.py <part id, vd p-0> <vi-VN|en-US> <voice-key, vd vi-alice> <voice id>`, xong chạy `python tools/embed_audio.py` để gắn danh sách file vào biến `AUDIO` trong trang. Voice id: Alice `Xb7hH8MSUJpSbSDYk0k2`, Laura `FGY2WhTYpPnrIDTdsKH5`, Brian `nPczCjzI2devNBz1zQrb`.
 - Gói miễn phí bắt buộc ghi nguồn → chân trang có "🎧 Giọng thu sẵn: ElevenLabs".
 
@@ -6727,6 +6728,7 @@ Tóm lại, giao tiếp giỏi không phải là nói hay như người bản x�
 - **⏬ Đọc từ đây** trên mỗi thẻ câu + bài đọc; đang đọc liên tục mà bấm 🔊/⏬ chỗ khác thì nhảy tới đó đọc tiếp. Đang lọc câu sống còn thì bỏ câu đang ẩn.
 - Hết giật khi bấm đọc: chỉ cuộn khi câu sắp ra khỏi màn hình, nút giữ nguyên độ rộng; dòng đang đọc được tô nền.
 - Mục lục kiểu TJ WordLoop: thanh tiêu đề cố định trên cùng "☰ Contents 📌". Ghim (mặc định, màn ≥861px) = cột cố định; bỏ ghim (📍) = thu lại, bấm ☰ trượt ra, bấm ra ngoài/Esc cất đi. Điện thoại luôn là ngăn kéo.
+- **Dòng tiếng Việt lên đầu mỗi thẻ** (2026-09-30), đọc theo thứ tự VN → EN → ES → CN.
 - Đã bỏ nút 👁 từng dòng tiếng Việt (vẫn còn 🙈 ẩn nghĩa theo nhiệm vụ / Phần / toàn bộ). Nội dung sát trái như cũ (TJ không muốn căn giữa).
 
 **📊 GA4** `G-8W2S7SP8WN` — ngoài các event cũ, thêm: `change_ui_lang`, `apply_voices`, `toggle_toc`, `pin_toc`, `play_all` (scope `from_here`).
@@ -6735,5 +6737,5 @@ Tóm lại, giao tiếp giỏi không phải là nói hay như người bản x�
 
 ## ⏳ Còn chờ
 - **Bookmark 🔖 "tính sau"**: nút 🔖 mỗi thẻ + lọc "Câu đã lưu (N)", lưu localStorage theo máy, đổi nhãn ★ → 🔥 Sống còn, GA4 `bookmark_add`; muốn đồng bộ nhiều máy thì cần Supabase.
-- Audio: Laura/Brian cho EN, tiếng Việt Part 2–4.
-- Xoá API key ElevenLabs sau khi làm xong audio (key đã lộ trong đoạn chat).
+- Audio: Laura/Brian cho dòng tiếng Anh.
+- Key ElevenLabs + PAT Supabase đã lộ trong đoạn chat: PAT xoá sau khi dùng; key nếu thấy lượt dùng lạ thì tạo key mới rồi cập nhật Vault.

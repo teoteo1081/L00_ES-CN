@@ -2,7 +2,9 @@
 import io, os, re, json, sys
 ROOT = r"C:\Users\User\Desktop\TJ\Project\L00_ES-CN"
 P = os.path.join(ROOT, "Operation_0-Chunks_1000_cau_EN_ES_CN_VN_v4.html")
-META = {'vi-alice': ('vi-VN', 'alice', 'Alice'), 'en-laura': ('en-US', 'laura', 'Laura'), 'en-brian': ('en-US', 'brian', 'Brian')}
+# thứ tự = thứ tự ưu tiên khi 1 câu có nhiều giọng (ElevenLabs trước, Microsoft sau)
+META = {'vi-alice': ('vi-VN', 'alice', 'Alice'), 'vi-hoaimy': ('vi-VN', 'hoaimy', 'HoaiMy'),
+        'en-laura': ('en-US', 'laura', 'Laura'), 'en-brian': ('en-US', 'brian', 'Brian')}
 audio = {}
 for d, (lang, key, name) in META.items():
     mf = os.path.join(ROOT, 'audio', d, 'manifest.json')
