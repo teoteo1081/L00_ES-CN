@@ -6728,7 +6728,9 @@ Tóm lại, giao tiếp giỏi không phải là nói hay như người bản x�
 - **⏬ Đọc từ đây** trên mỗi thẻ câu + bài đọc; đang đọc liên tục mà bấm 🔊/⏬ chỗ khác thì nhảy tới đó đọc tiếp. Đang lọc câu sống còn thì bỏ câu đang ẩn.
 - Hết giật khi bấm đọc: chỉ cuộn khi câu sắp ra khỏi màn hình, nút giữ nguyên độ rộng; dòng đang đọc được tô nền.
 - Mục lục kiểu TJ WordLoop: thanh tiêu đề cố định trên cùng "☰ Contents 📌". Ghim (mặc định, màn ≥861px) = cột cố định; bỏ ghim (📍) = thu lại, bấm ☰ trượt ra, bấm ra ngoài/Esc cất đi. Điện thoại luôn là ngăn kéo.
-- **Dòng tiếng Việt lên đầu mỗi thẻ** (2026-09-30), đọc theo thứ tự VN → EN → ES → CN.
+- **Dòng tiếng Việt lên đầu mỗi thẻ** (2026-09-30), đọc theo thứ tự VN → EN → ES → CN; chữ VN cùng cỡ/đậm với các tiếng khác.
+- **Pinyin to + đậm** như dòng chính (TJ học pinyin là chính); phiên âm ES giữ nhỏ.
+- **Phiên âm tiếng Anh trên trang = IPA giọng Mỹ** (vd /həˈloʊ/), thay kiểu chữ Việt "hơ-LÔU". Tạo bằng `tools/en_ipa.py` (eng_to_ipa + từ điển CMU + quy tắc sửa tay: âm nhấn ʌ, what /wʌt/, từ viết tắt…). Lưu ý: phần bài học trong file .md này vẫn giữ phiên âm kiểu cũ.
 - Đã bỏ nút 👁 từng dòng tiếng Việt (vẫn còn 🙈 ẩn nghĩa theo nhiệm vụ / Phần / toàn bộ). Nội dung sát trái như cũ (TJ không muốn căn giữa).
 
 **📊 GA4** `G-8W2S7SP8WN` — ngoài các event cũ, thêm: `change_ui_lang`, `apply_voices`, `toggle_toc`, `pin_toc`, `play_all` (scope `from_here`).
