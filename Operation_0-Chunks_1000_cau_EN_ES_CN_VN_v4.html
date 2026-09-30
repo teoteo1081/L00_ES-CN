@@ -88,6 +88,8 @@ h3{font-size:17px;color:var(--accent2);margin:0}
   background:var(--chip);color:var(--ink);cursor:pointer;flex:none;
 }
 .say-all-btn:hover, .hide-btn:hover{border-color:var(--accent2)}
+.from-btn{font-size:12px;padding:5px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--accent2);cursor:pointer;flex:none}
+.from-btn:hover{border-color:var(--accent2)}
 .say-all-btn.playing{background:var(--accent);color:#fff;border-color:var(--accent)}
 .ctx{font-size:13px;color:var(--sub);margin:4px 0 14px;font-style:italic}
 .vocab-box{margin:10px 0 18px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 14px}
@@ -245,7 +247,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
       vpEmpty: 'No voice on this device — this language will be skipped.', vpAuto: 'Auto ({v})', vpOff: '🔇 Don\'t read this language',
       vpTest: '▶ Test', vpRate: '⏩ Speed', vpDone: 'Done',
       testOff: 'This language is muted — pick a voice, then test', sayOff: 'This language is muted — turn it back on in 🎙 Voices',
-      noMean: 'No separate meaning for this word — see the full sentence meaning below.', noMeanSel: 'No meaning for this selection.', vpRec: '🎧 {v} (recorded · {n})', tocPin: 'Pin the contents open', tocUnpin: 'Unpin the contents', tocClose: 'Close', vpNote2: 'Tick the languages you want to hear, pick a voice (▶ Test to listen), then press Apply.', vpApply: '✓ Apply', vpCancel: 'Cancel', vpApplied: '✓ Voice settings applied', vpOnTitle: 'Read this language', ltTitle: 'Turn reading of this language on/off', noRec: 'No recorded voice for this sentence yet'
+      noMean: 'No separate meaning for this word — see the full sentence meaning below.', noMeanSel: 'No meaning for this selection.', vpRec: '🎧 {v} (recorded · {n})', fromHere: '⏬ From here', fromHereTitle: 'Read from here to the end — while reading, click 🔊 or ⏬ anywhere to jump there', tocPin: 'Pin the contents open', tocUnpin: 'Unpin the contents', tocClose: 'Close', vpNote2: 'Tick the languages you want to hear, pick a voice (▶ Test to listen), then press Apply.', vpApply: '✓ Apply', vpCancel: 'Cancel', vpApplied: '✓ Voice settings applied', vpOnTitle: 'Read this language', ltTitle: 'Turn reading of this language on/off', noRec: 'No recorded voice for this sentence yet'
     },
     vi: {
       title: 'Operation 0 → Chunks · 1000 câu sống còn', tag: '1000 câu · EN · ES · CN · VN', uiLang: 'Ngôn ngữ giao diện',
@@ -268,7 +270,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
       vpEmpty: 'Máy này chưa có giọng — sẽ tự bỏ qua tiếng này.', vpAuto: 'Tự chọn ({v})', vpOff: '🔇 Không đọc tiếng này',
       vpTest: '▶ Nghe thử', vpRate: '⏩ Tốc độ', vpDone: 'Xong',
       testOff: 'Tiếng này đang tắt — chọn 1 giọng rồi nghe thử', sayOff: 'Tiếng này đang tắt đọc — bật lại trong 🎙 Giọng đọc',
-      noMean: 'Chưa có nghĩa riêng cho từ này — xem nghĩa cả câu bên dưới.', noMeanSel: 'Chưa có nghĩa cho đoạn này.', vpRec: '🎧 {v} (thu sẵn · {n} câu)', tocPin: 'Ghim mục lục luôn mở', tocUnpin: 'Bỏ ghim mục lục', tocClose: 'Đóng', vpNote2: 'Tích chọn tiếng muốn nghe, chọn giọng (▶ Nghe thử để nghe), rồi bấm Áp dụng.', vpApply: '✓ Áp dụng', vpCancel: 'Huỷ', vpApplied: '✓ Đã áp dụng giọng đọc', vpOnTitle: 'Đọc tiếng này', ltTitle: 'Bật/tắt đọc tiếng này', noRec: 'Câu này chưa có giọng thu sẵn'
+      noMean: 'Chưa có nghĩa riêng cho từ này — xem nghĩa cả câu bên dưới.', noMeanSel: 'Chưa có nghĩa cho đoạn này.', vpRec: '🎧 {v} (thu sẵn · {n} câu)', fromHere: '⏬ Đọc từ đây', fromHereTitle: 'Đọc từ đây đến hết — đang đọc mà bấm 🔊 hoặc ⏬ chỗ khác thì nhảy tới đó đọc tiếp', tocPin: 'Ghim mục lục luôn mở', tocUnpin: 'Bỏ ghim mục lục', tocClose: 'Đóng', vpNote2: 'Tích chọn tiếng muốn nghe, chọn giọng (▶ Nghe thử để nghe), rồi bấm Áp dụng.', vpApply: '✓ Áp dụng', vpCancel: 'Huỷ', vpApplied: '✓ Đã áp dụng giọng đọc', vpOnTitle: 'Đọc tiếng này', ltTitle: 'Bật/tắt đọc tiếng này', noRec: 'Câu này chưa có giọng thu sẵn'
     },
     es: {
       title: 'Operation 0 → Chunks · 1000 frases de supervivencia', tag: '1000 frases · EN · ES · CN · VN', uiLang: 'Idioma de la interfaz',
@@ -291,7 +293,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
       vpEmpty: 'No hay voz en este dispositivo: se omitirá este idioma.', vpAuto: 'Automático ({v})', vpOff: '🔇 No leer este idioma',
       vpTest: '▶ Probar', vpRate: '⏩ Velocidad', vpDone: 'Listo',
       testOff: 'Este idioma está silenciado: elige una voz y prueba', sayOff: 'Este idioma está silenciado: actívalo en 🎙 Voces',
-      noMean: 'Esta palabra no tiene significado propio: mira el significado de la frase abajo.', noMeanSel: 'No hay significado para esta selección.', vpRec: '🎧 {v} (grabada · {n})', tocPin: 'Fijar el índice abierto', tocUnpin: 'Soltar el índice', tocClose: 'Cerrar', vpNote2: 'Marca los idiomas que quieres oír, elige una voz (▶ Probar para escuchar) y pulsa Aplicar.', vpApply: '✓ Aplicar', vpCancel: 'Cancelar', vpApplied: '✓ Voces aplicadas', vpOnTitle: 'Leer este idioma', ltTitle: 'Activar/desactivar la lectura de este idioma', noRec: 'Esta frase aún no tiene voz grabada'
+      noMean: 'Esta palabra no tiene significado propio: mira el significado de la frase abajo.', noMeanSel: 'No hay significado para esta selección.', vpRec: '🎧 {v} (grabada · {n})', fromHere: '⏬ Desde aquí', fromHereTitle: 'Leer desde aquí hasta el final — mientras lee, pulsa 🔊 o ⏬ en otro sitio para saltar allí', tocPin: 'Fijar el índice abierto', tocUnpin: 'Soltar el índice', tocClose: 'Cerrar', vpNote2: 'Marca los idiomas que quieres oír, elige una voz (▶ Probar para escuchar) y pulsa Aplicar.', vpApply: '✓ Aplicar', vpCancel: 'Cancelar', vpApplied: '✓ Voces aplicadas', vpOnTitle: 'Leer este idioma', ltTitle: 'Activar/desactivar la lectura de este idioma', noRec: 'Esta frase aún no tiene voz grabada'
     },
     zh: {
       title: 'Operation 0 → Chunks · 1000 句生存必备', tag: '1000 句 · EN · ES · CN · VN', uiLang: '界面语言',
@@ -314,7 +316,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
       vpEmpty: '本设备没有该语音——将自动跳过此语言。', vpAuto: '自动（{v}）', vpOff: '🔇 不朗读此语言',
       vpTest: '▶ 试听', vpRate: '⏩ 速度', vpDone: '完成',
       testOff: '此语言已关闭——请先选择语音再试听', sayOff: '此语言已关闭——请在 🎙 语音 中重新开启',
-      noMean: '此词没有单独释义——请看下方整句意思。', noMeanSel: '所选内容暂无释义。', vpRec: '🎧 {v}（录音 · {n} 句）', tocPin: '固定目录', tocUnpin: '取消固定目录', tocClose: '关闭', vpNote2: '勾选要听的语言，选择语音（▶ 试听），然后点“应用”。', vpApply: '✓ 应用', vpCancel: '取消', vpApplied: '✓ 已应用语音设置', vpOnTitle: '朗读此语言', ltTitle: '开启/关闭朗读此语言', noRec: '这句还没有录音'
+      noMean: '此词没有单独释义——请看下方整句意思。', noMeanSel: '所选内容暂无释义。', vpRec: '🎧 {v}（录音 · {n} 句）', fromHere: '⏬ 从这里读', fromHereTitle: '从这里一直读到最后——朗读时点别处的 🔊 或 ⏬ 即可跳到那里继续', tocPin: '固定目录', tocUnpin: '取消固定目录', tocClose: '关闭', vpNote2: '勾选要听的语言，选择语音（▶ 试听），然后点“应用”。', vpApply: '✓ 应用', vpCancel: '取消', vpApplied: '✓ 已应用语音设置', vpOnTitle: '朗读此语言', ltTitle: '开启/关闭朗读此语言', noRec: '这句还没有录音'
     }
   };
   /* tên Phần/bài, bối cảnh, tiêu đề bài đọc — gắn vào phần tử có data-tk */
@@ -486,9 +488,9 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
       this.activeBtn = null;
       updateStatus('');
     },
-    play: function(list, btn){
+    play: function(list, btn, start){
       this.stop();
-      this.queue = list; this.i = 0; this.playing = true; this.activeBtn = btn || null;
+      this.queue = list; this.i = start || 0; this.playing = true; this.activeBtn = btn || null;
       showMini(true);
       if (this.activeBtn){
         this.activeBtn.dataset.label = this.activeBtn.textContent;
@@ -516,6 +518,13 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
         self.i++;
         self._next();
       });
+    },
+    /* ⏬ đang đọc mà bấm chỗ khác (trước hay sau đều được) -> đọc tiếp từ đó */
+    jumpTo: function(i){
+      if (!this.playing) return;
+      this._tok++; cancelSpeech();
+      this.paused = false; paintMini();
+      this.i = i; this._next();
     },
     /* ⏸ tạm dừng: cắt câu đang đọc, NHỚ vị trí; ▶ đọc tiếp: đọc lại từ đầu câu đó */
     pause: function(){
@@ -560,7 +569,8 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
   }
   function queueFromMission(mission){
     var out = [];
-    mission.querySelectorAll('.card').forEach(function(card){ out = out.concat(queueFromCard(card)); });
+    var onlySurv = document.body.classList.contains('hide-normal');
+    mission.querySelectorAll('.card').forEach(function(card){ if (onlySurv && !card.classList.contains('survival')) return; out = out.concat(queueFromCard(card)); });
     return out;
   }
   function queueFromPart(part){
@@ -661,10 +671,26 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
       return;
     }
 
+    var fb = e.target.closest('.from-btn');
+    if (fb){
+      var host = fb.closest('.card, .reading'), gq = queueGlobal(), gi = -1;
+      for (var g = 0; g < gq.length; g++) if (host.contains(gq[g].el)) { gi = g; break; }
+      if (gi < 0) return;
+      var pab = document.getElementById('playAllBtn');
+      if (Player.playing && Player.activeBtn === pab && Player.queue.length === gq.length) Player.jumpTo(gi);
+      else Player.play(gq, pab, gi);
+      return;
+    }
+
     /* 🔊 đọc 1 câu/đoạn — bản gốc CHƯA gắn lệnh bấm cho nút này (bấm không có gì xảy ra) */
     var one = e.target.closest('.say-btn');
     if (one){
       var ol = one.getAttribute('data-lang');
+      if (Player.playing && Player.queue.length > 4){
+        var jrow = one.closest('.lrow, .rpara'), ji = -1;
+        for (var q = 0; q < Player.queue.length; q++) if (Player.queue[q].el === jrow) { ji = q; break; }
+        if (ji >= 0) { Player.jumpTo(ji); return; }
+      }
       if (Player.playing) Player.stop();
       cancelSpeech();
       if (isOff(ol)) { updateStatus(T('sayOff')); return; }
@@ -751,6 +777,9 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
     if (!Player.playing) { cancelSpeech(); withPref(draft, function(){ speakOne(sampleText(l), l); }); }
   });
 
+  document.querySelectorAll('.card-head, .reading-head').forEach(function(h){
+    var b = document.createElement('button'); b.className = 'from-btn'; b.textContent = T('fromHere'); b.title = T('fromHereTitle'); h.appendChild(b);
+  });
   document.getElementById('mpRate').innerHTML = rateOptions();
   document.getElementById('topRate').innerHTML = rateOptions();
   /* phím tắt: Space = tạm dừng / đọc tiếp khi đang đọc */
@@ -836,6 +865,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
     each('.lrow .say-btn', function(b){ b.title = T('sayTitle'); });
     each('.rpara .say-btn', function(b){ b.title = T('paraTitle'); });
     each('.eye-btn', function(b){ b.title = T('eyeTitle'); });
+    each('.from-btn', function(b){ b.textContent = T('fromHere'); b.title = T('fromHereTitle'); });
     each('.star', function(b){ b.title = T('starTitle'); });
     each('[data-tk]', function(el){ var h = TK[UILANG][el.getAttribute('data-tk')]; if (h != null) el.innerHTML = h; });
     each('.vocab-box summary', function(b){ b.textContent = T('vocabSum', {n: b.getAttribute('data-n')}); });
@@ -870,6 +900,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
     if ((el = t.closest('.say-all-btn'))) return send('play_all', { scope: el.getAttribute('data-scope'), part: where(el) });
     if ((el = t.closest('.toc-play'))) return send('play_all', { scope: 'toc', part: el.getAttribute('data-target') });
     if (t.closest('#playAllBtn')) return send('play_all', { scope: 'everything' });
+    if ((el = t.closest('.from-btn'))) return send('play_all', { scope: 'from_here', part: where(el) });
     if ((el = t.closest('.eye-btn'))) return send('toggle_meaning', { part: where(el) });
     if (t.closest('#hideAllBtn')) return send('toggle_meaning', { part: 'all' });
     if (t.closest('#toggleSurvival')) return send('toggle_survival');
