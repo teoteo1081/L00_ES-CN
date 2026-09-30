@@ -16,11 +16,13 @@
 - Mặc định mở trang bằng ngôn ngữ nào (VI, hay theo ngôn ngữ trình duyệt)?
 - Sau khi làm: kiểm thử bằng Chrome chạy ngầm, cập nhật `index.html` trỏ sang V5, giữ GA4 `G-8W2S7SP8WN` + các event hiện có, thêm event `change_ui_lang`.
 
-## ✅ Đã làm B2 (2026-09-29) — `Operation_0-Chunks_1000_cau_EN_ES_CN_VN_v5.html`
+## ✅ Đã làm B2 (2026-09-29) — gộp thẳng vào `Operation_0-Chunks_1000_cau_EN_ES_CN_VN_v4.html`
+- TJ đã đưa link file V4 lên website nên **giữ tên file V4**: nội dung V5 chép đè vào V4, xoá file V5. Link cũ vẫn chạy, không cần sửa gì ở Supabase.
+- Bản V4 trước khi chép đè: `old/..._v4_backup.html`. Các bản cũ (gốc, v2, v3) cũng chuyển vào `old/`.
 - TJ chốt: **mở trang mặc định tiếng Anh**. Lần 1 chỉ dịch nút + hướng dẫn; xem thử thấy lệch nên TJ chọn **dịch luôn tên Phần/bài, bối cảnh + mức lịch sự, tiêu đề bài đọc, tiêu đề checklist** (nội dung câu, nghĩa VN, các mục checklist giữ nguyên).
 - Tên Phần/bài: phần tử có `data-tk` → bảng `TK` trong JS (vi/en/es/zh). GA4 vẫn gửi tên gốc tiếng Việt (`data-ga`) để số liệu không bị tách theo ngôn ngữ.
 - Ô chọn 🌐 VI / EN / ES / 中文 đầu thanh công cụ; nhớ theo máy (localStorage `op0-uilang`). HTML tĩnh đã là tiếng Anh nên không bị nháy chữ Việt khi tải.
 - Dịch: thanh công cụ, đoạn hướng dẫn đầu trang + đầu Phần 5, nút/tooltip Phần–nhiệm vụ–câu–bài đọc, ô "Từ vựng chủ chốt", bảng 🎙 giọng đọc, thanh phát nổi, dòng trạng thái, tooltip "chưa có nghĩa".
-- GA4 giữ `G-8W2S7SP8WN` + thêm event `change_ui_lang` (`ui_lang`). `index.html` trỏ sang V5.
+- GA4 giữ `G-8W2S7SP8WN` + thêm event `change_ui_lang` (`ui_lang`). `index.html` trỏ về V4.
 - Kiểm thử Chrome chạy ngầm: 4 ngôn ngữ đổi đúng, nút bật/tắt giữ trạng thái, bảng giọng đổi ngay khi đang mở, tải lại nhớ ngôn ngữ, không lỗi JS.
 - Bookmark 🔖 vẫn "tính sau".
