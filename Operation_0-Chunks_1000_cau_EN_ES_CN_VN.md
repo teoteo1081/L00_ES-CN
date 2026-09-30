@@ -6692,3 +6692,48 @@ Tóm lại, giao tiếp giỏi không phải là nói hay như người bản x�
 - [ ] Mình đọc xong cả 4 bài đọc ở Phần 5.
 
 **✿ Nhiệm vụ hoàn thành! You did it! ¡Lo lograste! 你做到了！Bạn làm được rồi! ✿**
+
+---
+
+# 🛠 Ghi chú làm trang web (V4 → V5)
+
+> Gộp từ `KE-HOACH-V5.md` ngày 2026-09-30 — cùng 1 project nên để chung 1 file. Phần này là ghi chú kỹ thuật cho người làm trang, không phải bài học.
+
+**Trang đang chạy:** `Operation_0-Chunks_1000_cau_EN_ES_CN_VN_v4.html` (link https://teoteo1081.github.io/L00_ES-CN/ → `index.html` trỏ về V4). TJ đã đưa link file V4 lên website nên **giữ nguyên tên file V4**: bản V5 được chép đè vào V4, file V5 đã xoá. Bản V4 trước khi chép đè: `old/..._v4_backup.html`; các bản cũ (gốc, v2, v3) cũng ở `old/`. Trang không dùng Supabase.
+
+## Tình hình V4 lúc bắt đầu (2026-09-29)
+- Giao diện toàn tiếng Việt, mỗi câu hiện đủ 4 dòng EN/ES/CN/VN.
+- **"★ Chỉ hiện câu sống còn"** (`#toggleSurvival`) lọc còn **320/1000 câu** có class `card survival`. Danh sách cố định, chọn lúc soạn. CSS: `.hide-normal .card:not(.survival){display:none}`.
+- **★ trên thẻ chỉ là nhãn** (`<span class="star">`), không bấm được — TJ từng tưởng là nút bookmark.
+
+## ✅ Đã làm
+**🌐 Đổi ngôn ngữ giao diện VI / EN / ES / 中文** (không làm lọc bật/tắt từng dòng chữ)
+- Mặc định mở bằng **tiếng Anh**; nhớ theo máy (localStorage `op0-uilang`). HTML tĩnh đã là tiếng Anh nên không nháy chữ Việt khi tải.
+- Dịch: thanh công cụ, hướng dẫn đầu trang + đầu Phần 5, nút/tooltip, ô "Từ vựng chủ chốt", bảng 🎙, thanh phát nổi, dòng trạng thái; **và** tên Phần/bài, bối cảnh + mức lịch sự, tiêu đề bài đọc, tiêu đề checklist (phần tử `data-tk` → bảng `TK` trong JS). Nội dung câu, nghĩa VN, các mục checklist giữ nguyên.
+- GA4 vẫn gửi tên gốc tiếng Việt (`data-ga`) để số liệu không bị tách theo ngôn ngữ giao diện.
+
+**🎧 Giọng đọc thu sẵn (ElevenLabs, 2026-09-29/30)**
+- Tài khoản miễn phí **không dùng được giọng thư viện qua API** (Nhi/Tuyết/Ms.Thanh… cần gói trả phí) → TJ chọn giọng mặc định **Alice**.
+- Đã có: **250 câu tiếng Việt Part 1** → `audio/vi-alice/*.mp3` + `manifest.json` (≈4,4 MB). Trang ưu tiên phát file; câu chưa có file thì báo "chưa có giọng thu sẵn".
+- Chờ làm: giọng Mỹ **Laura / Brian** cho dòng tiếng Anh, tiếng Việt Part 2–4. Ước tính cả trang ≈ 100.000 ký tự (Alice + Laura + Brian) ≈ 5 tháng gói miễn phí.
+- Công cụ trong `tools/` (chạy lại được, bỏ qua file đã có): đặt biến môi trường `K=<API key>` rồi `python tools/gen_audio.py <part id, vd p-0> <vi-VN|en-US> <voice-key, vd vi-alice> <voice id>`, xong chạy `python tools/embed_audio.py` để gắn danh sách file vào biến `AUDIO` trong trang. Voice id: Alice `Xb7hH8MSUJpSbSDYk0k2`, Laura `FGY2WhTYpPnrIDTdsKH5`, Brian `nPczCjzI2devNBz1zQrb`.
+- Gói miễn phí bắt buộc ghi nguồn → chân trang có "🎧 Giọng thu sẵn: ElevenLabs".
+
+**🎙 Bảng giọng đọc**
+- Mỗi tiếng có ô tích bật/tắt + chọn giọng + ▶ Nghe thử; bấm **✓ Áp dụng** mới lưu, Huỷ / bấm ra ngoài thì bỏ.
+- Ô **⏩ tốc độ** trên thanh công cụ (0.3x–1.5x), đồng bộ với bảng giọng + thanh phát nổi, áp dụng cả cho file thu sẵn.
+
+**📖 Đọc & bố cục**
+- **⏬ Đọc từ đây** trên mỗi thẻ câu + bài đọc; đang đọc liên tục mà bấm 🔊/⏬ chỗ khác thì nhảy tới đó đọc tiếp. Đang lọc câu sống còn thì bỏ câu đang ẩn.
+- Hết giật khi bấm đọc: chỉ cuộn khi câu sắp ra khỏi màn hình, nút giữ nguyên độ rộng; dòng đang đọc được tô nền.
+- Mục lục kiểu TJ WordLoop: thanh tiêu đề cố định trên cùng "☰ Contents 📌". Ghim (mặc định, màn ≥861px) = cột cố định; bỏ ghim (📍) = thu lại, bấm ☰ trượt ra, bấm ra ngoài/Esc cất đi. Điện thoại luôn là ngăn kéo.
+- Đã bỏ nút 👁 từng dòng tiếng Việt (vẫn còn 🙈 ẩn nghĩa theo nhiệm vụ / Phần / toàn bộ). Nội dung sát trái như cũ (TJ không muốn căn giữa).
+
+**📊 GA4** `G-8W2S7SP8WN` — ngoài các event cũ, thêm: `change_ui_lang`, `apply_voices`, `toggle_toc`, `pin_toc`, `play_all` (scope `from_here`).
+
+**Kiểm thử:** mỗi lần sửa đều chạy Chrome chạy ngầm (máy tính + điện thoại, 4 ngôn ngữ), không lỗi JS.
+
+## ⏳ Còn chờ
+- **Bookmark 🔖 "tính sau"**: nút 🔖 mỗi thẻ + lọc "Câu đã lưu (N)", lưu localStorage theo máy, đổi nhãn ★ → 🔥 Sống còn, GA4 `bookmark_add`; muốn đồng bộ nhiều máy thì cần Supabase.
+- Audio: Laura/Brian cho EN, tiếng Việt Part 2–4.
+- Xoá API key ElevenLabs sau khi làm xong audio (key đã lộ trong đoạn chat).
