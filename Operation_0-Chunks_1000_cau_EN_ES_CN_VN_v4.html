@@ -116,7 +116,7 @@ table.vocab th{background:var(--chip)}
 .star{color:var(--gold)}
 .card-head .say-all-btn{margin-left:auto}
 .lrow{display:flex;align-items:flex-start;gap:8px;padding:3px 0;flex-wrap:wrap}
-.lrow.vn{color:var(--sub);font-size:14px}
+.lrow.vn{}  /* dòng VN cùng cỡ/màu với EN-ES-CN (TJ 2026-09-30) */
 .flag{font-size:16px;line-height:1.6}
 .say-btn, .eye-btn{
   border:none;background:transparent;cursor:pointer;font-size:15px;line-height:1;
@@ -124,7 +124,7 @@ table.vocab th{background:var(--chip)}
 }
 .say-btn:hover, .eye-btn:hover{background:var(--chip)}
 .ltext{font-weight:600;flex:1;min-width:180px}
-.vntext{flex:1}
+.vntext{flex:1;font-weight:600;min-width:180px}
 .vnplaceholder{display:none;font-style:italic;color:var(--sub);flex:1}
 .lrow.vn.vn-hidden .vntext{display:none}
 .lrow.vn.vn-hidden .vnplaceholder{display:inline}
