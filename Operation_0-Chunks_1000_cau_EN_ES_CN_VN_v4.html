@@ -57,11 +57,6 @@ a{color:var(--accent2);text-decoration:none}
   background:var(--panel);color:var(--ink);cursor:pointer;
 }
 .topbar button.active{border-color:var(--accent2);color:var(--accent2)}
-.topbar .lt{display:inline-flex;gap:2px}
-.topbar .lt button{padding:6px 8px}
-.topbar .lt button.off{opacity:.45;text-decoration:line-through}
-.topbar .qv{font-size:13px;display:inline-flex;align-items:center;gap:4px}
-.topbar .qv select{max-width:190px}
 .topbar .rate-lbl{font-size:13px;display:inline-flex;align-items:center;gap:4px}
 .topbar .hint{font-size:12px;color:var(--sub)}
 h2{font-size:22px;border-bottom:2px solid var(--gold);padding-bottom:6px;margin:0}
@@ -154,12 +149,17 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
 #voicePanel[hidden]{display:none;}
 #voicePanel h3{margin:0 0 4px;font-size:15px;}
 #voicePanel .vp-note{font-size:12px;color:var(--sub);margin:0 0 10px;}
-#voicePanel .vp-row{display:grid;grid-template-columns:92px 1fr auto;gap:8px;align-items:center;margin-bottom:8px;}
+#voicePanel .vp-row{display:grid;grid-template-columns:118px 1fr auto;gap:8px;align-items:center;margin-bottom:8px;}
 #voicePanel .vp-row label{font-size:13px;font-weight:600;}
 #voicePanel select{width:100%;min-width:0;font-size:13px;padding:5px 6px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);}
 #voicePanel .vp-test{font-size:12px;padding:5px 9px;border-radius:8px;border:1px solid var(--line);background:var(--chip);color:var(--ink);cursor:pointer;white-space:nowrap;}
 #voicePanel .vp-empty{grid-column:2 / 4;font-size:12px;color:var(--sub);}
-#voicePanel .vp-foot{display:flex;justify-content:flex-end;margin-top:4px;}
+#voicePanel .vp-foot{display:flex;justify-content:flex-end;gap:8px;margin-top:4px;}
+#voicePanel .vp-lang{display:flex;align-items:center;gap:6px;cursor:pointer;}
+#voicePanel .vp-lang input{width:16px;height:16px;margin:0;accent-color:var(--accent2);cursor:pointer;}
+#voicePanel .vp-off select, #voicePanel .vp-off .vp-test{opacity:.45;}
+#voicePanel .vp-cancel{font-size:13px;padding:5px 12px;border-radius:8px;border:1px solid var(--line);background:var(--chip);color:var(--ink);cursor:pointer;}
+#voicePanel .vp-test:disabled{cursor:default;}
 #voicePanel .vp-close{font-size:13px;padding:5px 12px;border-radius:8px;border:1px solid var(--line);background:var(--accent);color:#fff;cursor:pointer;}
 </style>
 </head>
@@ -179,9 +179,6 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
       <button id="toggleSurvival">★ Survival sentences only</button>
       <button id="hideAllBtn">🙈 Hide all VN meanings</button>
       <button id="playAllBtn">▶ Read everything</button>
-      <span class="lt"><button data-ltoggle="en-US">🇺🇸 EN</button><button data-ltoggle="es-ES">🇪🇸 ES</button><button data-ltoggle="zh-CN">🇨🇳 CN</button><button data-ltoggle="vi-VN">🇻🇳 VN</button></span>
-      <label class="qv">🇺🇸 <select id="qvEN" data-vlang="en-US"></select></label>
-      <label class="qv">🇻🇳 <select id="qvVI" data-vlang="vi-VN"></select></label>
       <label class="rate-lbl" title="Reading speed">⏩ <select id="topRate" data-rate title="Reading speed"></select></label>
       <button id="voiceBtn" title="Pick a voice for each language, or mute the ones you don't want to hear">🎙 Voices</button>
       <span class="hint" id="speakStatus"></span>
@@ -237,7 +234,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
       vpEmpty: 'No voice on this device — this language will be skipped.', vpAuto: 'Auto ({v})', vpOff: '🔇 Don\'t read this language',
       vpTest: '▶ Test', vpRate: '⏩ Speed', vpDone: 'Done',
       testOff: 'This language is muted — pick a voice, then test', sayOff: 'This language is muted — turn it back on in 🎙 Voices',
-      noMean: 'No separate meaning for this word — see the full sentence meaning below.', noMeanSel: 'No meaning for this selection.', vpRec: '🎧 {v} (recorded · {n})', ltTitle: 'Turn reading of this language on/off', noRec: 'No recorded voice for this sentence yet'
+      noMean: 'No separate meaning for this word — see the full sentence meaning below.', noMeanSel: 'No meaning for this selection.', vpRec: '🎧 {v} (recorded · {n})', vpNote2: 'Tick the languages you want to hear, pick a voice (▶ Test to listen), then press Apply.', vpApply: '✓ Apply', vpCancel: 'Cancel', vpApplied: '✓ Voice settings applied', vpOnTitle: 'Read this language', ltTitle: 'Turn reading of this language on/off', noRec: 'No recorded voice for this sentence yet'
     },
     vi: {
       title: 'Operation 0 → Chunks · 1000 câu sống còn', tag: '1000 câu · EN · ES · CN · VN', uiLang: 'Ngôn ngữ giao diện',
@@ -260,7 +257,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
       vpEmpty: 'Máy này chưa có giọng — sẽ tự bỏ qua tiếng này.', vpAuto: 'Tự chọn ({v})', vpOff: '🔇 Không đọc tiếng này',
       vpTest: '▶ Nghe thử', vpRate: '⏩ Tốc độ', vpDone: 'Xong',
       testOff: 'Tiếng này đang tắt — chọn 1 giọng rồi nghe thử', sayOff: 'Tiếng này đang tắt đọc — bật lại trong 🎙 Giọng đọc',
-      noMean: 'Chưa có nghĩa riêng cho từ này — xem nghĩa cả câu bên dưới.', noMeanSel: 'Chưa có nghĩa cho đoạn này.', vpRec: '🎧 {v} (thu sẵn · {n} câu)', ltTitle: 'Bật/tắt đọc tiếng này', noRec: 'Câu này chưa có giọng thu sẵn'
+      noMean: 'Chưa có nghĩa riêng cho từ này — xem nghĩa cả câu bên dưới.', noMeanSel: 'Chưa có nghĩa cho đoạn này.', vpRec: '🎧 {v} (thu sẵn · {n} câu)', vpNote2: 'Tích chọn tiếng muốn nghe, chọn giọng (▶ Nghe thử để nghe), rồi bấm Áp dụng.', vpApply: '✓ Áp dụng', vpCancel: 'Huỷ', vpApplied: '✓ Đã áp dụng giọng đọc', vpOnTitle: 'Đọc tiếng này', ltTitle: 'Bật/tắt đọc tiếng này', noRec: 'Câu này chưa có giọng thu sẵn'
     },
     es: {
       title: 'Operation 0 → Chunks · 1000 frases de supervivencia', tag: '1000 frases · EN · ES · CN · VN', uiLang: 'Idioma de la interfaz',
@@ -283,7 +280,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
       vpEmpty: 'No hay voz en este dispositivo: se omitirá este idioma.', vpAuto: 'Automático ({v})', vpOff: '🔇 No leer este idioma',
       vpTest: '▶ Probar', vpRate: '⏩ Velocidad', vpDone: 'Listo',
       testOff: 'Este idioma está silenciado: elige una voz y prueba', sayOff: 'Este idioma está silenciado: actívalo en 🎙 Voces',
-      noMean: 'Esta palabra no tiene significado propio: mira el significado de la frase abajo.', noMeanSel: 'No hay significado para esta selección.', vpRec: '🎧 {v} (grabada · {n})', ltTitle: 'Activar/desactivar la lectura de este idioma', noRec: 'Esta frase aún no tiene voz grabada'
+      noMean: 'Esta palabra no tiene significado propio: mira el significado de la frase abajo.', noMeanSel: 'No hay significado para esta selección.', vpRec: '🎧 {v} (grabada · {n})', vpNote2: 'Marca los idiomas que quieres oír, elige una voz (▶ Probar para escuchar) y pulsa Aplicar.', vpApply: '✓ Aplicar', vpCancel: 'Cancelar', vpApplied: '✓ Voces aplicadas', vpOnTitle: 'Leer este idioma', ltTitle: 'Activar/desactivar la lectura de este idioma', noRec: 'Esta frase aún no tiene voz grabada'
     },
     zh: {
       title: 'Operation 0 → Chunks · 1000 句生存必备', tag: '1000 句 · EN · ES · CN · VN', uiLang: '界面语言',
@@ -306,7 +303,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
       vpEmpty: '本设备没有该语音——将自动跳过此语言。', vpAuto: '自动（{v}）', vpOff: '🔇 不朗读此语言',
       vpTest: '▶ 试听', vpRate: '⏩ 速度', vpDone: '完成',
       testOff: '此语言已关闭——请先选择语音再试听', sayOff: '此语言已关闭——请在 🎙 语音 中重新开启',
-      noMean: '此词没有单独释义——请看下方整句意思。', noMeanSel: '所选内容暂无释义。', vpRec: '🎧 {v}（录音 · {n} 句）', ltTitle: '开启/关闭朗读此语言', noRec: '这句还没有录音'
+      noMean: '此词没有单独释义——请看下方整句意思。', noMeanSel: '所选内容暂无释义。', vpRec: '🎧 {v}（录音 · {n} 句）', vpNote2: '勾选要听的语言，选择语音（▶ 试听），然后点“应用”。', vpApply: '✓ 应用', vpCancel: '取消', vpApplied: '✓ 已应用语音设置', vpOnTitle: '朗读此语言', ltTitle: '开启/关闭朗读此语言', noRec: '这句还没有录音'
     }
   };
   /* tên Phần/bài, bối cảnh, tiêu đề bài đọc — gắn vào phần tử có data-tk */
@@ -335,7 +332,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
   // ---------- speech ----------
   var synth = window.speechSynthesis;
   var voices = [];
-  function loadVoices(){ voices = synth ? synth.getVoices() : []; if (typeof LANGS !== 'undefined' && LANGS) { renderVoicePanel(); renderQuick(); } }
+  function loadVoices(){ voices = synth ? synth.getVoices() : []; if (typeof LANGS !== 'undefined' && LANGS) renderVoicePanel(); }
   loadVoices();
   if (synth) synth.onvoiceschanged = loadVoices;
 
@@ -374,11 +371,11 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
   try { voicePref = JSON.parse(localStorage.getItem('op0-voices')) || {}; } catch(e){ voicePref = {}; }
   var REC_DEF = {'vi-VN': 'el:alice', 'en-US': 'el:laura'};
   Object.keys(REC_DEF).forEach(function(l){
-    var k = REC_DEF[l].slice(3), flag = 'op0-rec-' + l;
+    var k = REC_DEF[l].slice(3), flag = 'op0-rec2-' + l;
     if (!(AUDIO[l] && AUDIO[l][k])) return;
     var done = null; try { done = localStorage.getItem(flag); } catch(e){}
     if (!done && (!(l in voicePref) || voicePref[l] === '' || (l === 'vi-VN' && voicePref[l] === OFF))) voicePref[l] = REC_DEF[l];
-    try { localStorage.setItem(flag, '1'); } catch(e){}
+    try { localStorage.setItem(flag, '1'); localStorage.setItem('op0-voices', JSON.stringify(voicePref)); } catch(e){}
   });
   if (!('vi-VN' in voicePref)) voicePref['vi-VN'] = OFF;
   function savePref(){ try { localStorage.setItem('op0-voices', JSON.stringify(voicePref)); } catch(e){} }
@@ -402,8 +399,16 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
     return list[0] || null;
   }
 
-  function voiceOptions(lang){
-    var list = langVoices(lang), cur = voicePref[lang] || '', out = '', recs = AUDIO[lang] || {};
+  /* bảng 🎙: chỉnh trên bản nháp, bấm "Áp dụng" mới lưu; Huỷ / bấm ra ngoài = bỏ */
+  var draft = null;
+  function withPref(p, fn){ var keep = voicePref; voicePref = p; try { return fn(); } finally { voicePref = keep; } }
+  function lastVoice(lang){   /* giọng dùng khi bật lại 1 tiếng đang tắt */
+    var prev = {}; try { prev = JSON.parse(localStorage.getItem('op0-prev-voice')) || {}; } catch(e){}
+    if (prev[lang] != null && prev[lang] !== OFF) return prev[lang];
+    return (REC_DEF[lang] && AUDIO[lang] && AUDIO[lang][REC_DEF[lang].slice(3)]) ? REC_DEF[lang] : '';
+  }
+  function voiceOptions(lang, cur){
+    var list = langVoices(lang), out = '', recs = AUDIO[lang] || {};
     Object.keys(recs).forEach(function(k){
       var v = 'el:' + k;
       out += '<option value="' + v + '"' + (cur === v ? ' selected' : '') + '>' + T('vpRec', {v: recs[k].name, n: Object.keys(recs[k].files).length}) + '</option>';
@@ -412,28 +417,27 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
       out += '<option value=""' + (cur === '' ? ' selected' : '') + '>' + T('vpAuto', {v: list[0].name.replace(/</g,'')}) + '</option>' +
         list.map(function(v){ return '<option value="' + v.name.replace(/"/g,'&quot;') + '"' + (cur === v.name ? ' selected' : '') + '>' + v.name.replace(/</g,'') + '</option>'; }).join('');
     }
-    return out + '<option value="' + OFF + '"' + (cur === OFF ? ' selected' : '') + '>' + T('vpOff') + '</option>';
+    return out;
   }
   function hasAnyVoice(lang){ return langVoices(lang).length || Object.keys(AUDIO[lang] || {}).length; }
   function sampleText(lang){ var r = recOf(lang); return r ? Object.keys(r.files)[0] : LANGS.filter(function(L){ return L[0] === lang; })[0][2]; }
-  /* ô chọn giọng nhanh trên thanh công cụ (đổi được cả lúc đang đọc — áp dụng từ câu kế tiếp) */
-  function paintToggles(){ document.querySelectorAll('[data-ltoggle]').forEach(function(b){ var off = isOff(b.getAttribute('data-ltoggle')); b.classList.toggle('off', off); b.setAttribute('aria-pressed', String(!off)); b.title = T('ltTitle'); }); }
-  function renderQuick(){ paintToggles(); document.querySelectorAll('.qv select').forEach(function(sel){ sel.innerHTML = voiceOptions(sel.getAttribute('data-vlang')); }); }
   function renderVoicePanel(){
     var p = document.getElementById('voicePanel');
-    if (!p) return;
-    var html = '<h3>' + T('voice') + '</h3><p class="vp-note">' + T('vpNote') + '</p>';
+    if (!p || !draft) return;
+    var html = '<h3>' + T('voice') + '</h3><p class="vp-note">' + T('vpNote2') + '</p>';
     LANGS.forEach(function(L){
-      html += '<div class="vp-row"><label>' + L[1] + '</label>';
-      if (!hasAnyVoice(L[0])){
+      var l = L[0], cur = draft[l] || '', on = cur !== OFF, can = hasAnyVoice(l);
+      html += '<div class="vp-row' + (on && can ? '' : ' vp-off') + '"><label class="vp-lang" title="' + T('vpOnTitle') + '"><input type="checkbox" data-von="' + l + '"' +
+        (on && can ? ' checked' : '') + (can ? '' : ' disabled') + '> ' + L[1] + '</label>';
+      if (!can){
         html += '<span class="vp-empty">' + T('vpEmpty') + '</span></div>';
         return;
       }
-      html += '<select data-vlang="' + L[0] + '">' + voiceOptions(L[0]) +
-        '</select><button class="vp-test" data-vtest="' + L[0] + '">' + T('vpTest') + '</button></div>';
+      html += '<select data-vlang="' + l + '"' + (on ? '' : ' disabled') + '>' + voiceOptions(l, on ? cur : lastVoice(l)) +
+        '</select><button class="vp-test" data-vtest="' + l + '"' + (on ? '' : ' disabled') + '>' + T('vpTest') + '</button></div>';
     });
     html += '<div class="vp-row"><label>' + T('vpRate') + '</label><select data-rate>' + rateOptions() + '</select><span></span></div>';
-    html += '<div class="vp-foot"><button class="vp-close" id="voiceClose">' + T('vpDone') + '</button></div>';
+    html += '<div class="vp-foot"><button class="vp-cancel" id="voiceCancel">' + T('vpCancel') + '</button><button class="vp-close" id="voiceApply">' + T('vpApply') + '</button></div>';
     p.innerHTML = html;
   }
 
@@ -602,40 +606,31 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
     /* 🎙 bảng chọn giọng */
     if (e.target.closest('#voiceBtn')){
       var vp = document.getElementById('voicePanel');
-      renderVoicePanel();
+      if (vp.hidden){ draft = JSON.parse(JSON.stringify(voicePref)); renderVoicePanel(); }
       vp.hidden = !vp.hidden;
       return;
     }
-    if (e.target.closest('#voiceClose')){ document.getElementById('voicePanel').hidden = true; return; }
+    if (e.target.closest('#voiceCancel')){ document.getElementById('voicePanel').hidden = true; return; }
+    if (e.target.closest('#voiceApply')){
+      var prevV = {}; try { prevV = JSON.parse(localStorage.getItem('op0-prev-voice')) || {}; } catch(err){}
+      LANGS.forEach(function(L){ if (voicePref[L[0]] !== OFF && voicePref[L[0]] != null) prevV[L[0]] = voicePref[L[0]]; });
+      try { localStorage.setItem('op0-prev-voice', JSON.stringify(prevV)); } catch(err){}
+      voicePref = draft; savePref();
+      document.getElementById('voicePanel').hidden = true;
+      updateStatus(T('vpApplied'));
+      return;
+    }
     var vt = e.target.closest('[data-vtest]');
     if (vt){
       var tl = vt.getAttribute('data-vtest');
-      var sample = sampleText(tl);
       cancelSpeech();
-      if (isOff(tl)) { updateStatus(T('testOff')); return; }
-      speakOne(sample, tl);
+      if (draft[tl] === OFF) { updateStatus(T('testOff')); return; }
+      withPref(draft, function(){ speakOne(sampleText(tl), tl); });
       return;
     }
     var vpOpen = document.getElementById('voicePanel');
     if (vpOpen && !vpOpen.hidden && !e.target.closest('#voicePanel')) vpOpen.hidden = true;
 
-    var lt = e.target.closest('[data-ltoggle]');
-    if (lt){
-      var ll = lt.getAttribute('data-ltoggle'), prev = {};
-      try { prev = JSON.parse(localStorage.getItem('op0-prev-voice')) || {}; } catch(err){}
-      if (isOff(ll)){
-        var back = prev[ll];
-        if (back == null) back = (REC_DEF[ll] && AUDIO[ll] && AUDIO[ll][REC_DEF[ll].slice(3)]) ? REC_DEF[ll] : '';
-        voicePref[ll] = back;
-      } else {
-        prev[ll] = voicePref[ll] || '';
-        try { localStorage.setItem('op0-prev-voice', JSON.stringify(prev)); } catch(err){}
-        voicePref[ll] = OFF;
-      }
-      savePref(); renderQuick();
-      var vpl = document.getElementById('voicePanel'); if (vpl && !vpl.hidden) renderVoicePanel();
-      return;
-    }
     var eye = e.target.closest('.eye-btn');
     if (eye){
       eye.closest('.lrow.vn').classList.toggle('vn-hidden');
@@ -717,20 +712,23 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
   document.addEventListener('change', function(e){
     var rs = e.target.closest && e.target.closest('[data-rate]');
     if (rs){ setRate(parseFloat(rs.value)); return; }
+    var on = e.target.closest && e.target.closest('[data-von]');
+    if (on && draft){
+      var ol = on.getAttribute('data-von'), row = on.closest('.vp-row'), osel = row.querySelector('select');
+      draft[ol] = on.checked ? (osel ? osel.value : '') : OFF;
+      row.classList.toggle('vp-off', !on.checked);
+      row.querySelectorAll('select, .vp-test').forEach(function(x){ x.disabled = !on.checked; });
+      return;
+    }
     var sel = e.target.closest && e.target.closest('[data-vlang]');
-    if (!sel) return;
+    if (!sel || !draft) return;
     var l = sel.getAttribute('data-vlang');
-    if (sel.value) voicePref[l] = sel.value; else delete voicePref[l];
-    if (l === 'vi-VN' && !sel.value) voicePref[l] = '';   /* đã tự chọn "Tự chọn" -> không ép tắt lại */
-    savePref();
-    renderQuick();
-    var vpx = document.getElementById('voicePanel'); if (vpx && !vpx.hidden && !sel.closest('#voicePanel')) renderVoicePanel();
-    if (sel.value !== OFF && !Player.playing) { cancelSpeech(); speakOne(sampleText(l), l); }
+    draft[l] = sel.value;   /* "" = tự chọn giọng máy */
+    if (!Player.playing) { cancelSpeech(); withPref(draft, function(){ speakOne(sampleText(l), l); }); }
   });
 
   document.getElementById('mpRate').innerHTML = rateOptions();
   document.getElementById('topRate').innerHTML = rateOptions();
-  renderQuick();
   /* phím tắt: Space = tạm dừng / đọc tiếp khi đang đọc */
   document.addEventListener('keydown', function(e){
     if (e.code !== 'Space' || !Player.playing) return;
@@ -801,7 +799,6 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
     set('#voicePanel', 'vpAria', 'aria-label');
     set('#mpRate', 'rateTitle', 'title'); set('#topRate', 'rateTitle', 'title'); set('.rate-lbl', 'rateTitle', 'title'); set('#mpStop', 'stopTitle', 'title');
     paintMini();
-    renderQuick();
     each('.toc-play', function(b){ b.title = T('tocPlayTitle', {n: +b.getAttribute('data-target').slice(2) + 1}); });
     each('.say-all-btn', function(b){
       var sc = b.getAttribute('data-scope');
@@ -854,7 +851,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
     if (t.closest('#toggleSurvival')) return send('toggle_survival');
     if (t.closest('#themeBtn')) return send('toggle_theme');
     if (t.closest('#voiceBtn')) return send('open_voice_panel');
-    if ((el = t.closest('[data-ltoggle]'))) return send('toggle_lang', { audio_lang: el.getAttribute('data-ltoggle'), on: el.classList.contains('off') });
+    if (t.closest('#voiceApply')) return send('apply_voices');
     if ((el = t.closest('[data-nav]'))) return send('section_view', { part: (el.getAttribute('data-ga') || el.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 90) });
   }, true);
   document.addEventListener('change', function(e){
