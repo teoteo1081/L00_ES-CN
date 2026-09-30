@@ -57,6 +57,9 @@ a{color:var(--accent2);text-decoration:none}
   background:var(--panel);color:var(--ink);cursor:pointer;
 }
 .topbar button.active{border-color:var(--accent2);color:var(--accent2)}
+.topbar .lt{display:inline-flex;gap:2px}
+.topbar .lt button{padding:6px 8px}
+.topbar .lt button.off{opacity:.45;text-decoration:line-through}
 .topbar .qv{font-size:13px;display:inline-flex;align-items:center;gap:4px}
 .topbar .qv select{max-width:190px}
 .topbar .rate-lbl{font-size:13px;display:inline-flex;align-items:center;gap:4px}
@@ -176,6 +179,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
       <button id="toggleSurvival">★ Survival sentences only</button>
       <button id="hideAllBtn">🙈 Hide all VN meanings</button>
       <button id="playAllBtn">▶ Read everything</button>
+      <span class="lt"><button data-ltoggle="en-US">🇺🇸 EN</button><button data-ltoggle="es-ES">🇪🇸 ES</button><button data-ltoggle="zh-CN">🇨🇳 CN</button><button data-ltoggle="vi-VN">🇻🇳 VN</button></span>
       <label class="qv">🇺🇸 <select id="qvEN" data-vlang="en-US"></select></label>
       <label class="qv">🇻🇳 <select id="qvVI" data-vlang="vi-VN"></select></label>
       <label class="rate-lbl" title="Reading speed">⏩ <select id="topRate" data-rate title="Reading speed"></select></label>
@@ -233,7 +237,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
       vpEmpty: 'No voice on this device — this language will be skipped.', vpAuto: 'Auto ({v})', vpOff: '🔇 Don\'t read this language',
       vpTest: '▶ Test', vpRate: '⏩ Speed', vpDone: 'Done',
       testOff: 'This language is muted — pick a voice, then test', sayOff: 'This language is muted — turn it back on in 🎙 Voices',
-      noMean: 'No separate meaning for this word — see the full sentence meaning below.', noMeanSel: 'No meaning for this selection.', vpRec: '🎧 {v} (recorded · {n})', noRec: 'No recorded voice for this sentence yet'
+      noMean: 'No separate meaning for this word — see the full sentence meaning below.', noMeanSel: 'No meaning for this selection.', vpRec: '🎧 {v} (recorded · {n})', ltTitle: 'Turn reading of this language on/off', noRec: 'No recorded voice for this sentence yet'
     },
     vi: {
       title: 'Operation 0 → Chunks · 1000 câu sống còn', tag: '1000 câu · EN · ES · CN · VN', uiLang: 'Ngôn ngữ giao diện',
@@ -256,7 +260,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
       vpEmpty: 'Máy này chưa có giọng — sẽ tự bỏ qua tiếng này.', vpAuto: 'Tự chọn ({v})', vpOff: '🔇 Không đọc tiếng này',
       vpTest: '▶ Nghe thử', vpRate: '⏩ Tốc độ', vpDone: 'Xong',
       testOff: 'Tiếng này đang tắt — chọn 1 giọng rồi nghe thử', sayOff: 'Tiếng này đang tắt đọc — bật lại trong 🎙 Giọng đọc',
-      noMean: 'Chưa có nghĩa riêng cho từ này — xem nghĩa cả câu bên dưới.', noMeanSel: 'Chưa có nghĩa cho đoạn này.', vpRec: '🎧 {v} (thu sẵn · {n} câu)', noRec: 'Câu này chưa có giọng thu sẵn'
+      noMean: 'Chưa có nghĩa riêng cho từ này — xem nghĩa cả câu bên dưới.', noMeanSel: 'Chưa có nghĩa cho đoạn này.', vpRec: '🎧 {v} (thu sẵn · {n} câu)', ltTitle: 'Bật/tắt đọc tiếng này', noRec: 'Câu này chưa có giọng thu sẵn'
     },
     es: {
       title: 'Operation 0 → Chunks · 1000 frases de supervivencia', tag: '1000 frases · EN · ES · CN · VN', uiLang: 'Idioma de la interfaz',
@@ -279,7 +283,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
       vpEmpty: 'No hay voz en este dispositivo: se omitirá este idioma.', vpAuto: 'Automático ({v})', vpOff: '🔇 No leer este idioma',
       vpTest: '▶ Probar', vpRate: '⏩ Velocidad', vpDone: 'Listo',
       testOff: 'Este idioma está silenciado: elige una voz y prueba', sayOff: 'Este idioma está silenciado: actívalo en 🎙 Voces',
-      noMean: 'Esta palabra no tiene significado propio: mira el significado de la frase abajo.', noMeanSel: 'No hay significado para esta selección.', vpRec: '🎧 {v} (grabada · {n})', noRec: 'Esta frase aún no tiene voz grabada'
+      noMean: 'Esta palabra no tiene significado propio: mira el significado de la frase abajo.', noMeanSel: 'No hay significado para esta selección.', vpRec: '🎧 {v} (grabada · {n})', ltTitle: 'Activar/desactivar la lectura de este idioma', noRec: 'Esta frase aún no tiene voz grabada'
     },
     zh: {
       title: 'Operation 0 → Chunks · 1000 句生存必备', tag: '1000 句 · EN · ES · CN · VN', uiLang: '界面语言',
@@ -302,7 +306,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
       vpEmpty: '本设备没有该语音——将自动跳过此语言。', vpAuto: '自动（{v}）', vpOff: '🔇 不朗读此语言',
       vpTest: '▶ 试听', vpRate: '⏩ 速度', vpDone: '完成',
       testOff: '此语言已关闭——请先选择语音再试听', sayOff: '此语言已关闭——请在 🎙 语音 中重新开启',
-      noMean: '此词没有单独释义——请看下方整句意思。', noMeanSel: '所选内容暂无释义。', vpRec: '🎧 {v}（录音 · {n} 句）', noRec: '这句还没有录音'
+      noMean: '此词没有单独释义——请看下方整句意思。', noMeanSel: '所选内容暂无释义。', vpRec: '🎧 {v}（录音 · {n} 句）', ltTitle: '开启/关闭朗读此语言', noRec: '这句还没有录音'
     }
   };
   /* tên Phần/bài, bối cảnh, tiêu đề bài đọc — gắn vào phần tử có data-tk */
@@ -413,7 +417,8 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
   function hasAnyVoice(lang){ return langVoices(lang).length || Object.keys(AUDIO[lang] || {}).length; }
   function sampleText(lang){ var r = recOf(lang); return r ? Object.keys(r.files)[0] : LANGS.filter(function(L){ return L[0] === lang; })[0][2]; }
   /* ô chọn giọng nhanh trên thanh công cụ (đổi được cả lúc đang đọc — áp dụng từ câu kế tiếp) */
-  function renderQuick(){ document.querySelectorAll('.qv select').forEach(function(sel){ sel.innerHTML = voiceOptions(sel.getAttribute('data-vlang')); }); }
+  function paintToggles(){ document.querySelectorAll('[data-ltoggle]').forEach(function(b){ var off = isOff(b.getAttribute('data-ltoggle')); b.classList.toggle('off', off); b.setAttribute('aria-pressed', String(!off)); b.title = T('ltTitle'); }); }
+  function renderQuick(){ paintToggles(); document.querySelectorAll('.qv select').forEach(function(sel){ sel.innerHTML = voiceOptions(sel.getAttribute('data-vlang')); }); }
   function renderVoicePanel(){
     var p = document.getElementById('voicePanel');
     if (!p) return;
@@ -614,6 +619,23 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
     var vpOpen = document.getElementById('voicePanel');
     if (vpOpen && !vpOpen.hidden && !e.target.closest('#voicePanel')) vpOpen.hidden = true;
 
+    var lt = e.target.closest('[data-ltoggle]');
+    if (lt){
+      var ll = lt.getAttribute('data-ltoggle'), prev = {};
+      try { prev = JSON.parse(localStorage.getItem('op0-prev-voice')) || {}; } catch(err){}
+      if (isOff(ll)){
+        var back = prev[ll];
+        if (back == null) back = (REC_DEF[ll] && AUDIO[ll] && AUDIO[ll][REC_DEF[ll].slice(3)]) ? REC_DEF[ll] : '';
+        voicePref[ll] = back;
+      } else {
+        prev[ll] = voicePref[ll] || '';
+        try { localStorage.setItem('op0-prev-voice', JSON.stringify(prev)); } catch(err){}
+        voicePref[ll] = OFF;
+      }
+      savePref(); renderQuick();
+      var vpl = document.getElementById('voicePanel'); if (vpl && !vpl.hidden) renderVoicePanel();
+      return;
+    }
     var eye = e.target.closest('.eye-btn');
     if (eye){
       eye.closest('.lrow.vn').classList.toggle('vn-hidden');
@@ -832,6 +854,7 @@ footer{color:var(--sub);font-size:12px;text-align:center;margin-top:60px}
     if (t.closest('#toggleSurvival')) return send('toggle_survival');
     if (t.closest('#themeBtn')) return send('toggle_theme');
     if (t.closest('#voiceBtn')) return send('open_voice_panel');
+    if ((el = t.closest('[data-ltoggle]'))) return send('toggle_lang', { audio_lang: el.getAttribute('data-ltoggle'), on: el.classList.contains('off') });
     if ((el = t.closest('[data-nav]'))) return send('section_view', { part: (el.getAttribute('data-ga') || el.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 90) });
   }, true);
   document.addEventListener('change', function(e){
