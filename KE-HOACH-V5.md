@@ -1,4 +1,4 @@
-# Kế hoạch V5 — trang CIA Mission 1000 câu (đang bàn, CHƯA làm)
+# Kế hoạch V5 — trang CIA Mission 1000 câu
 
 > Ghi lúc 2026-09-29. TJ tạm dừng ("lát bàn rồi tính tiếp"). Chưa sửa code gì. V4 giữ nguyên, V5 sẽ là file mới.
 
@@ -15,3 +15,11 @@
 - Tên Phần/bài (vd "A1 · Giới thiệu bản thân & công ty") cần dịch sang EN/ES/CN — dịch hết hay chỉ nút + hướng dẫn?
 - Mặc định mở trang bằng ngôn ngữ nào (VI, hay theo ngôn ngữ trình duyệt)?
 - Sau khi làm: kiểm thử bằng Chrome chạy ngầm, cập nhật `index.html` trỏ sang V5, giữ GA4 `G-8W2S7SP8WN` + các event hiện có, thêm event `change_ui_lang`.
+
+## ✅ Đã làm B2 (2026-09-29) — `Operation_0-Chunks_1000_cau_EN_ES_CN_VN_v5.html`
+- TJ chốt: **chỉ dịch nút + hướng dẫn** (tên Phần/bài, bối cảnh, checklist, nội dung câu giữ nguyên); **mở trang mặc định tiếng Anh**.
+- Ô chọn 🌐 VI / EN / ES / 中文 đầu thanh công cụ; nhớ theo máy (localStorage `op0-uilang`). HTML tĩnh đã là tiếng Anh nên không bị nháy chữ Việt khi tải.
+- Dịch: thanh công cụ, đoạn hướng dẫn đầu trang + đầu Phần 5, nút/tooltip Phần–nhiệm vụ–câu–bài đọc, ô "Từ vựng chủ chốt", bảng 🎙 giọng đọc, thanh phát nổi, dòng trạng thái, tooltip "chưa có nghĩa".
+- GA4 giữ `G-8W2S7SP8WN` + thêm event `change_ui_lang` (`ui_lang`). `index.html` trỏ sang V5.
+- Kiểm thử Chrome chạy ngầm: 4 ngôn ngữ đổi đúng, nút bật/tắt giữ trạng thái, bảng giọng đổi ngay khi đang mở, tải lại nhớ ngôn ngữ, không lỗi JS.
+- Bookmark 🔖 vẫn "tính sau".
