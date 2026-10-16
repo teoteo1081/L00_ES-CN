@@ -1,0 +1,29 @@
+# Python & Environment
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+env/
+
+# IDE & Editor Configs
+.vscode/
+.cursor/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# OS Files
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Credentials & Sensitive Data
+.env
+*.pem
+credentials.json
+secrets.yaml
