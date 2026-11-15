@@ -27,3 +27,15 @@ Desktop.ini
 *.pem
 credentials.json
 secrets.yaml
+
+
+# ==========================================
+# DevOps Standard Ignore Rules (Added)
+# ==========================================
+~$*
+*.tmp
+*.log
+logs/
+private/
+Private/
+
